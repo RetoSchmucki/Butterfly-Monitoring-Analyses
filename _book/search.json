@@ -1,0 +1,42 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Butterfly Monitoring Analyses",
+    "section": "",
+    "text": "Preface\nThis project aims to collate documentation of methods used to analyze and work with Butterfly Monitoring Schemes (BMS) data. We focus on methods used to analyze count data associated to Pollard transects that represent the core of the eBMS database.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "butterfly_counts.html",
+    "href": "butterfly_counts.html",
+    "title": "Butterfly Counts",
+    "section": "",
+    "text": "Simulation\nTo demonstrate and rigorously demonstrate the method used to compute the Grassland Butterfly Indicator which involves calculating collated abundance indices from multiple sites and estimating the population trend from a set of indicator species, the best option is to use simulated datasets that provide realistic data with known parameters. The simulation approach allows us to assess the methods’ performance and enables us to control individual parameters and conduct rigorous sensitivity analysis. This method provides useful insight into the method and better assesses its power and limitations. To simulate butterfly count across sites and over multiple iterations, we will use the function developed by Collin Edwards and available in the R packages butterflyGamSims\nlibrary(data.table)\nlibrary(ggplot2)\nlibrary(butterflyGamSims)\nlibrary(rbms)\n\n Welcome to rbms, version 1.1.3 \n This package has been tested, but is still in active development and feedbacks are welcome\n https://github.com/RetoSchmucki/rbms/issues\nIn a first case, we will simulate counts for one site for one year, using a Gaussian curve to depict the adult butterflies’ seasonal phenology (activity curve). The daily count are generated from a random Poisson process.\nbtfl_data &lt;- timeseries_sim(nsims=1,\n               year = c(1),\n               doy.samples = seq(from=0, to=365, by=1),\n               abund.type = \"exp\",\n               activity.type = \"gauss\",\n               sample.type = \"pois\",\n               sim.parms = list(growth.rate = 0,\n                                init.size = 500, \n                                act.mean = 175,\n                                act.sd = 15)\n               )\n\n\nbtfl_dt1 &lt;- data.table(btfl_data$timeseries)[years == 1 & sim.id == 1, .(doy,count)]\nbtfl_dt2 &lt;- data.table(btfl_data$timeseries)[years == 1 & sim.id == 1, .(doy,act)]\n\n\nbtfl_fig &lt;- ggplot() +\n                geom_point(data=btfl_dt1, aes(x=doy, y=count), color = 'black') + \n                geom_line(data = btfl_dt2,\n                aes(x = doy, y = act), color = 'orange') +\n                xlim(0,365) + ylim(0, max(btfl_dt1$count, btfl_dt2$act))\n                \nbtfl_fig",
+    "crumbs": [
+      "Butterfly Counts"
+    ]
+  },
+  {
+    "objectID": "butterfly_counts.html#simple-flight-curve",
+    "href": "butterfly_counts.html#simple-flight-curve",
+    "title": "Butterfly Counts",
+    "section": "Simple flight curve",
+    "text": "Simple flight curve\nHere we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonhevel model.\n\nbtfl_data_zn &lt;- timeseries_sim(nsims=10,\n               year = c(1:10),\n               doy.samples = seq(from=0, to=365, by=1),\n               abund.type = \"exp\",\n               activity.type = \"zon\",\n               sample.type = \"nb\",\n               sim.parms = list(growth.rate = -0.2,\n                                init.size = 500, \n                                act.mean = 175,\n                                act.sd = 15,\n                                theta = 5,\n                                zon.theta = 50,\n                                t0 = 100,\n                                beta = 5,\n                                alpha = 0.05)\n               )\n\nbtfl_dt &lt;- data.table(btfl_data_zn$timeseries)\nplot(btfl_dt[years == 1 & sim.id == 1, .(doy,count)], xlim = c(0,365), ylim = c(0, max(btfl_dt$count)))\npoints(btfl_dt[years == 1 & sim.id == 1, .(doy,act)], type = \"l\", col = 'orange')\npoints(btfl_dt[years == 1 & sim.id == 2, .(doy,count)], col = 'magenta')",
+    "crumbs": [
+      "Butterfly Counts"
+    ]
+  },
+  {
+    "objectID": "butterfly_counts.html#simple-trend-case",
+    "href": "butterfly_counts.html#simple-trend-case",
+    "title": "Butterfly Counts",
+    "section": "Simple trend case",
+    "text": "Simple trend case\nIn the first scenario, we will apply the method to a simple case where we have one univoltine species that is monitored over 15 years across 100 sites where the populations follow the same trend with a known growth rate.",
+    "crumbs": [
+      "Butterfly Counts"
+    ]
+  }
+]
