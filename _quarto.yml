@@ -1,0 +1,43 @@
+project:
+  type: book
+
+book:
+  title: "Butterfly Monitoring Analyses"
+  date: "16/07/2024"
+  author: 
+  - name: Reto Schmucki
+    orcid: 0000-0003-3064-7553
+    email: retoschm@ceh.ac.uk
+    affiliations:
+      - name: UK Centre for Ecology & Hydrology
+        address: Maclean Building Benson lane
+        city: Crowmarsh Gilford, Wallingford
+        state: Oxfordshire
+        postal-code: OX10 8BB
+  - name: Dylan Carbone
+    email: dylcar@ceh.ac.uk
+    affiliations:
+      - name: UK Centre for Ecology & Hydrology
+        address: Maclean Building Benson lane
+        city: Crowmarsh Gilford, Wallingford
+        state: Oxfordshire
+        postal-code: OX10 8BB
+  chapters:
+    - index.qmd
+    - butterfly_counts.qmd
+#   - references.qmd
+
+bibliography: references.bib
+highlight-style: pygments
+
+format:
+  html:
+    theme: cosmo
+    linkcolor: 'darkcyan'
+    code-block-bg: '#F5F5F2'
+    code-block-border-left: true
+  pdf:
+    documentclass: book
+    linkcolor: 'darkcyan'
+    code-block-bg: '#F5F5F2'
+    code-block-border-left: true

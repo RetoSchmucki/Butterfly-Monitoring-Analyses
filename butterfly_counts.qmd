@@ -1,0 +1,75 @@
+# Butterfly Counts {.unnumbered}
+
+## Simulation
+To demonstrate and rigorously demonstrate the method used to compute the Grassland Butterfly Indicator which involves calculating collated abundance indices from multiple sites and estimating the population trend from a set of indicator species, the best option is to use simulated datasets that provide realistic data with known parameters. The simulation approach allows us to assess the methods' performance and enables us to control individual parameters and conduct rigorous sensitivity analysis. This method provides useful insight into the method and better assesses its power and limitations. To simulate butterfly count across sites and over multiple iterations, we will use the function developed by Collin Edwards and available in the [R packages butterflyGamSims](https://github.com/cbedwards/butterflyGamSims/tree/main)
+
+
+```{R}
+library(data.table)
+library(ggplot2)
+library(butterflyGamSims)
+library(rbms)
+```
+
+In a first case, we will simulate counts for one site for one year, using a Gaussian curve to depict the adult butterflies' seasonal phenology (activity curve). The daily count are generated from a random Poisson process.
+
+```{R}
+btfl_data <- timeseries_sim(nsims=1,
+               year = c(1),
+               doy.samples = seq(from=0, to=365, by=1),
+               abund.type = "exp",
+               activity.type = "gauss",
+               sample.type = "pois",
+               sim.parms = list(growth.rate = 0,
+                                init.size = 500, 
+                                act.mean = 175,
+                                act.sd = 15)
+               )
+
+
+btfl_dt1 <- data.table(btfl_data$timeseries)[years == 1 & sim.id == 1, .(doy,count)]
+btfl_dt2 <- data.table(btfl_data$timeseries)[years == 1 & sim.id == 1, .(doy,act)]
+
+
+btfl_fig <- ggplot() +
+                geom_point(data=btfl_dt1, aes(x=doy, y=count), color = 'black') + 
+                geom_line(data = btfl_dt2,
+                aes(x = doy, y = act), color = 'orange') +
+                xlim(0,365) + ylim(0, max(btfl_dt1$count, btfl_dt2$act))
+                
+btfl_fig
+```
+
+## Simple flight curve
+Here we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonhevel model.
+
+```{R}
+btfl_data_zn <- timeseries_sim(nsims=10,
+               year = c(1:10),
+               doy.samples = seq(from=0, to=365, by=1),
+               abund.type = "exp",
+               activity.type = "zon",
+               sample.type = "nb",
+               sim.parms = list(growth.rate = -0.2,
+                                init.size = 500, 
+                                act.mean = 175,
+                                act.sd = 15,
+                                theta = 5,
+                                zon.theta = 50,
+                                t0 = 100,
+                                beta = 5,
+                                alpha = 0.05)
+               )
+
+btfl_dt <- data.table(btfl_data_zn$timeseries)
+plot(btfl_dt[years == 1 & sim.id == 1, .(doy,count)], xlim = c(0,365), ylim = c(0, max(btfl_dt$count)))
+points(btfl_dt[years == 1 & sim.id == 1, .(doy,act)], type = "l", col = 'orange')
+points(btfl_dt[years == 1 & sim.id == 2, .(doy,count)], col = 'magenta')
+```
+
+## Simple trend case
+In the first scenario, we will apply the method to a simple case where we have one univoltine species that is monitored over 15 years across 100 sites where the populations follow the same trend with a known growth rate.
+
+
+
+

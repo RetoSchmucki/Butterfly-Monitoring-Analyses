@@ -1,0 +1,5 @@
+# Preface {.unnumbered}
+
+This project aims to collate documentation of methods used to analyze and work with Butterfly Monitoring Schemes (BMS) data. We focus on methods used to analyze count data associated to Pollard transects that represent the core of the eBMS database.
+
+
