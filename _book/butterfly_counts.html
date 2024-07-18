@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./index.html" rel="prev">
+<link href="./Butterfly_monitoring.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./butterfly_counts.html">Butterfly Counts</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./butterfly_counts.html">From Counts to FLight Curves</a></li><li class="breadcrumb-item"><a href="./butterfly_counts.html">Butterfly Counts</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -130,6 +130,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Butterfly Monitoring Analyses</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/RetoSchmucki/Butterfly-Monitoring-Analyses" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Butterfly-Monitoring-Analyses.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -145,12 +149,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Counting Butterflies</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Butterfly_monitoring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Butterfly Monitoring</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">From Counts to FLight Curves</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./butterfly_counts.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Butterfly Counts</span></a>
   </div>
 </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -162,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#simulation" id="toc-simulation" class="nav-link active" data-scroll-target="#simulation">Simulation</a></li>
-  <li><a href="#simple-flight-curve" id="toc-simple-flight-curve" class="nav-link" data-scroll-target="#simple-flight-curve">Simple flight curve</a></li>
+  <li><a href="#non-gaussian-flight-curve" id="toc-non-gaussian-flight-curve" class="nav-link" data-scroll-target="#non-gaussian-flight-curve">Non Gaussian flight curve</a></li>
   <li><a href="#simple-trend-case" id="toc-simple-trend-case" class="nav-link" data-scroll-target="#simple-trend-case">Simple trend case</a></li>
   </ul>
 </nav>
@@ -170,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./butterfly_counts.html">From Counts to FLight Curves</a></li><li class="breadcrumb-item"><a href="./butterfly_counts.html">Butterfly Counts</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Butterfly Counts</h1>
 </div>
@@ -191,44 +223,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="simulation" class="level2">
 <h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
-<p>To demonstrate and rigorously demonstrate the method used to compute the Grassland Butterfly Indicator which involves calculating collated abundance indices from multiple sites and estimating the population trend from a set of indicator species, the best option is to use simulated datasets that provide realistic data with known parameters. The simulation approach allows us to assess the methods’ performance and enables us to control individual parameters and conduct rigorous sensitivity analysis. This method provides useful insight into the method and better assesses its power and limitations. To simulate butterfly count across sites and over multiple iterations, we will use the function developed by Collin Edwards and available in the <a href="https://github.com/cbedwards/butterflyGamSims/tree/main">R packages butterflyGamSims</a></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(butterflyGamSims)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rbms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code> Welcome to rbms, version 1.1.3 
- This package has been tested, but is still in active development and feedbacks are welcome
- https://github.com/RetoSchmucki/rbms/issues</code></pre>
+<p>To demonstrate and assess the method used to compute butterfly abundance indices and the Grassland Butterfly Indicator which involves calculating collated abundance indices from multiple sites and estimating the population trend from a set of indicator species, the best option is to use simulated datasets that provide realistic data with known parameters. The simulation approach allows us to assess the methods’ performance and enables us to control individual parameters and conduct rigorous sensitivity analysis. This will provide useful insight into the method and enable rigorous assessment of its power and limitations. To simulate butterfly count across sites and over multiple iterations, we will use the function developed by Collin Edwards and available in the <a href="https://github.com/cbedwards/butterflyGamSims/tree/main">R packages butterflyGamSims</a>. We will use the simulation to test the GAM method implemented in the <a href="https://retoschmucki.github.io/rbms/index.html">R package rbms</a>.</p>
+<div class="cell" data-messages="false">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"data.table"</span>)) <span class="fu">install.packages</span>(<span class="st">"data.table"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"ggplot2"</span>)) <span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"devtools"</span>)) <span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"rbms"</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"RetoSchmucki/rbms"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"butterflyGamSims"</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"cbedwards/butterflyGamSims"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">13276</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>In a first case, we will simulate counts for one site for one year, using a Gaussian curve to depict the adult butterflies’ seasonal phenology (activity curve). The daily count are generated from a random Poisson process.</p>
+<p>In the first case, we will simulate counts for one site for one year, using a Gaussian curve to depict the adult butterflies’ seasonal phenology (activity curve). The daily counts are generated from a random Poisson process.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>btfl_data <span class="ot">&lt;-</span> <span class="fu">timeseries_sim</span>(<span class="at">nsims=</span><span class="dv">1</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">1</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">doy.samples =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">365</span>, <span class="at">by=</span><span class="dv">1</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">abund.type =</span> <span class="st">"exp"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">activity.type =</span> <span class="st">"gauss"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">sample.type =</span> <span class="st">"pois"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">sim.parms =</span> <span class="fu">list</span>(<span class="at">growth.rate =</span> <span class="dv">0</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">init.size =</span> <span class="dv">500</span>, </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.mean =</span> <span class="dv">175</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.sd =</span> <span class="dv">15</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>               )</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>btfl_dt1 <span class="ot">&lt;-</span> <span class="fu">data.table</span>(btfl_data<span class="sc">$</span>timeseries)[years <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim.id <span class="sc">==</span> <span class="dv">1</span>, .(doy,count)]</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>btfl_dt2 <span class="ot">&lt;-</span> <span class="fu">data.table</span>(btfl_data<span class="sc">$</span>timeseries)[years <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim.id <span class="sc">==</span> <span class="dv">1</span>, .(doy,act)]</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>btfl_fig <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_dt1, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count), <span class="at">color =</span> <span class="st">'black'</span>) <span class="sc">+</span> </span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_dt2,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act), <span class="at">color =</span> <span class="st">'orange'</span>) <span class="sc">+</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_dt1<span class="sc">$</span>count, btfl_dt2<span class="sc">$</span>act))</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>btfl_fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>btfl_data <span class="ot">&lt;-</span> <span class="fu">timeseries_sim</span>(<span class="at">nsims=</span><span class="dv">1</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2023</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">doy.samples =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">365</span>, <span class="at">by=</span><span class="dv">1</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">abund.type =</span> <span class="st">"exp"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">activity.type =</span> <span class="st">"gauss"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">sample.type =</span> <span class="st">"pois"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">sim.parms =</span> <span class="fu">list</span>(<span class="at">growth.rate =</span> <span class="dv">0</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">init.size =</span> <span class="dv">500</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.mean =</span> <span class="dv">175</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.sd =</span> <span class="dv">15</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>btfl_dt1 <span class="ot">&lt;-</span> <span class="fu">data.table</span>(btfl_data<span class="sc">$</span>timeseries)[, .(doy,count)]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>btfl_dt2 <span class="ot">&lt;-</span> <span class="fu">data.table</span>(btfl_data<span class="sc">$</span>timeseries)[, .(doy,act)]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>flc_col <span class="ot">&lt;-</span> <span class="st">'orange'</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>cnt_col <span class="ot">&lt;-</span> <span class="st">'darkcyan'</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>missing_col <span class="ot">&lt;-</span> <span class="st">'red'</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>GAM_col <span class="ot">&lt;-</span> <span class="st">'#483d8b'</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>btfl_fig <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_dt1, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_dt2,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_dt1<span class="sc">$</span>count, btfl_dt2<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated butterfly counts"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- daily visit"</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>btfl_fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -237,36 +277,165 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section>
-<section id="simple-flight-curve" class="level2">
-<h2 class="anchored" data-anchor-id="simple-flight-curve">Simple flight curve</h2>
-<p>Here we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonhevel model.</p>
+<p>In the example above, the activity curve represented by the line has a Gaussian shape and counts presented by the points along the curve are independent random samples from a Poisson distribution. Because we sampled a count value for 365 days (day-of-year; doy), the counts are representative of the population of active adult butterflies as if the site was visited every. This implies that a proportion of butterflies are counted more than one day as their lifespan exceeds one day. On Pollard transect, this is how butterfly counts are likely to be counted and reported, but with a different frequency as visits are generally weekly, fortnightly, or even monthly. We can replicate this value by resampling the daily count weekly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>btfl_data_zn <span class="ot">&lt;-</span> <span class="fu">timeseries_sim</span>(<span class="at">nsims=</span><span class="dv">10</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">doy.samples =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">365</span>, <span class="at">by=</span><span class="dv">1</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">abund.type =</span> <span class="st">"exp"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">activity.type =</span> <span class="st">"zon"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">sample.type =</span> <span class="st">"nb"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">sim.parms =</span> <span class="fu">list</span>(<span class="at">growth.rate =</span> <span class="sc">-</span><span class="fl">0.2</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">init.size =</span> <span class="dv">500</span>, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.mean =</span> <span class="dv">175</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.sd =</span> <span class="dv">15</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">theta =</span> <span class="dv">5</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">zon.theta =</span> <span class="dv">50</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                                <span class="at">t0 =</span> <span class="dv">100</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                                <span class="at">beta =</span> <span class="dv">5</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                                <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>               )</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>btfl_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(btfl_data_zn<span class="sc">$</span>timeseries)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(btfl_dt[years <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim.id <span class="sc">==</span> <span class="dv">1</span>, .(doy,count)], <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">365</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_dt<span class="sc">$</span>count)))</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(btfl_dt[years <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim.id <span class="sc">==</span> <span class="dv">1</span>, .(doy,act)], <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">'orange'</span>)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(btfl_dt[years <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim.id <span class="sc">==</span> <span class="dv">2</span>, .(doy,count)], <span class="at">col =</span> <span class="st">'magenta'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>btfl_ts <span class="ot">&lt;-</span> <span class="fu">data.table</span>(btfl_data<span class="sc">$</span>timeseries)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>btfl_ts[ , date <span class="sc">:</span><span class="er">=</span> <span class="fu">as.Date</span>(doy, <span class="at">origin =</span> <span class="st">"2023-01-01"</span>)<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>btfl_ts[ , week <span class="sc">:</span><span class="er">=</span> <span class="fu">isoweek</span>(date)]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>btfl_ts[<span class="fu">month</span>(date) <span class="sc">!=</span> <span class="dv">1</span> <span class="sc">|</span> week <span class="sc">&lt;</span> <span class="dv">50</span>, weekday <span class="sc">:</span><span class="er">=</span> <span class="fu">rowid</span>(week)]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> btfl_ts[btfl_ts[weekday <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>), .I[<span class="fu">sample</span>(.N, <span class="dv">1</span>)], by <span class="ot">=</span> week][[<span class="dv">2</span>]]]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_dt2,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_dt1<span class="sc">$</span>count, btfl_dt2<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated butterfly counts"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="butterfly_counts_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="butterfly_counts_files/figure-html/time-sample-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From the weekly visits, counts outside of the monitoring period will not be informed, in many cases these are ‘zeros’ as we expect the monitoring season to align with butterflies’ activity. Some other weeks might be missing from the time series, potentially due to unsuitable weather conditions for monitoring or recorder’s unavailability. We can include these missing visits by resampling a subset of the weekly counts.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl2 <span class="ot">&lt;-</span> btfl_week_smpl[<span class="fu">month</span>(date) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>), ]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>prob_vct <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.5</span>,btfl_week_smpl2[,.N])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>prob_vct[<span class="dv">1</span><span class="sc">:</span><span class="fu">round</span>(<span class="fu">quantile</span>(<span class="fu">seq_len</span>(btfl_week_smpl2[,.N]), <span class="fu">c</span>(<span class="fl">0.25</span>)))] <span class="ot">&lt;-</span> <span class="fl">0.75</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>prob_vct[<span class="fu">round</span>(<span class="fu">quantile</span>(<span class="fu">seq_len</span>(btfl_week_smpl2[,.N]), <span class="fu">c</span>(<span class="fl">0.75</span>)))<span class="sc">:</span>btfl_week_smpl2[,.N]] <span class="ot">&lt;-</span> <span class="fl">0.75</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>btfl_week_missing <span class="ot">&lt;-</span> btfl_week_smpl2[<span class="sc">-</span><span class="fu">sample</span>(.N, <span class="fu">round</span>(<span class="fl">0.75</span><span class="sc">*</span>.N), <span class="at">prob =</span> prob_vct), ]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>btfl_fig3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl2, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_missing, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"missing"</span>), </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shape=</span><span class="dv">4</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">stroke=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_dt2,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_dt1<span class="sc">$</span>count, btfl_dt2<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>, <span class="st">"missing"</span>),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col, missing_col)) <span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated butterfly counts"</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>btfl_fig3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="butterfly_counts_files/figure-html/sample-season-missing-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Because recorders only report the number of observed butterflies, zeros are generally not reported but can be derived from the visit dates.</p>
+<div class="cell" data-messages="false">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>visit_sim <span class="ot">&lt;-</span> btfl_week_smpl2[, site_id <span class="sc">:</span><span class="er">=</span> <span class="st">"site_1"</span>][<span class="sc">!</span>date <span class="sc">%in%</span> btfl_week_missing<span class="sc">$</span>date, .(site_id, date)]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>count_sim <span class="ot">&lt;-</span> btfl_week_smpl2[, site_id <span class="sc">:</span><span class="er">=</span> <span class="st">"site_1"</span>][<span class="sc">!</span>date <span class="sc">%in%</span> btfl_week_missing<span class="sc">$</span>date, .(site_id, date, count)][</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                count<span class="sc">&gt;=</span><span class="dv">1</span>,][, species <span class="sc">:</span><span class="er">=</span> <span class="st">"sp1"</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(visit_sim) <span class="ot">&lt;-</span> <span class="fu">toupper</span>(<span class="fu">names</span>(visit_sim))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(count_sim) <span class="ot">&lt;-</span> <span class="fu">toupper</span>(<span class="fu">names</span>(count_sim))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ts_date <span class="ot">&lt;-</span> rbms<span class="sc">::</span><span class="fu">ts_dwmy_table</span>(<span class="at">InitYear =</span> <span class="dv">2023</span>, <span class="at">LastYear =</span> <span class="dv">2023</span>, <span class="at">WeekDay1 =</span> <span class="st">'monday'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>ts_season <span class="ot">&lt;-</span> rbms<span class="sc">::</span><span class="fu">ts_monit_season</span>(ts_date,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">StartMonth =</span> <span class="dv">4</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">EndMonth =</span> <span class="dv">9</span>, </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">StartDay =</span> <span class="dv">1</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">EndDay =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">CompltSeason =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Anchor =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">AnchorLength =</span> <span class="dv">2</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">AnchorLag =</span> <span class="dv">2</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">TimeUnit =</span> <span class="st">'d'</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>ts_season_visit <span class="ot">&lt;-</span> rbms<span class="sc">::</span><span class="fu">ts_monit_site</span>(ts_season, visit_sim)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>ts_season_count <span class="ot">&lt;-</span> rbms<span class="sc">::</span><span class="fu">ts_monit_count_site</span>(ts_season_visit, count_sim, <span class="at">sp =</span> <span class="st">"sp1"</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>ts_flight_curve <span class="ot">&lt;-</span> rbms<span class="sc">::</span><span class="fu">flight_curve</span>(ts_season_count, </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">NbrSample =</span> <span class="dv">300</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                       <span class="at">MinVisit =</span> <span class="dv">5</span>,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                       <span class="at">MinOccur =</span> <span class="dv">3</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                       <span class="at">MinNbrSite =</span> <span class="dv">1</span>,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>                       <span class="at">MaxTrial =</span> <span class="dv">4</span>,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                       <span class="at">GamFamily =</span> <span class="st">'nb'</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SpeedGam =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                       <span class="at">CompltSeason =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SelectYear =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                       <span class="at">TimeUnit =</span> <span class="st">'d'</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> ts_flight_curve<span class="sc">$</span>pheno</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>btfl_fig4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>ts_season_count[ANCHOR <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(COUNT), ], <span class="fu">aes</span>(<span class="at">x=</span>DAY_SINCE, <span class="at">y=</span>COUNT, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_missing, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"missing"</span>), </span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shape=</span><span class="dv">4</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">stroke=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_dt2,</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> pheno,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">aes</span>(<span class="at">x =</span> trimDAYNO, <span class="at">y =</span> btfl_dt2[,<span class="fu">sum</span>(act)]<span class="sc">*</span>NM, <span class="at">colour =</span> <span class="st">"GAM_fit"</span>)) <span class="sc">+</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_dt2<span class="sc">$</span>act, </span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>                                          pheno<span class="sc">$</span>NM<span class="sc">*</span>btfl_dt2[,<span class="fu">sum</span>(act)], </span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>                                          btfl_week_missing<span class="sc">$</span>count, </span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>                                          ts_season_count[<span class="sc">!</span><span class="fu">is.na</span>(COUNT), COUNT] )) <span class="sc">+</span> </span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>, <span class="st">"missing"</span>, <span class="st">"GAM_fit"</span>),</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col, missing_col, GAM_col)) <span class="sc">+</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated butterfly counts"</span>,</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- Fitting GAM model with rbms"</span>)</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>btfl_fig4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="butterfly_counts_files/figure-html/count-visit-tables-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="non-gaussian-flight-curve" class="level2">
+<h2 class="anchored" data-anchor-id="non-gaussian-flight-curve">Non Gaussian flight curve</h2>
+<p>Here we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonhevel model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>btfl_data_zn <span class="ot">&lt;-</span> <span class="fu">timeseries_sim</span>(<span class="at">nsims=</span><span class="dv">10</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">doy.samples =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">365</span>, <span class="at">by=</span><span class="dv">1</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">abund.type =</span> <span class="st">"exp"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">activity.type =</span> <span class="st">"zon"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">sample.type =</span> <span class="st">"nb"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">sim.parms =</span> <span class="fu">list</span>(<span class="at">growth.rate =</span> <span class="sc">-</span><span class="fl">0.2</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">init.size =</span> <span class="dv">500</span>, </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.mean =</span> <span class="dv">175</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.sd =</span> <span class="dv">15</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">theta =</span> <span class="dv">5</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">zon.theta =</span> <span class="dv">50</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                                <span class="at">t0 =</span> <span class="dv">100</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                                <span class="at">beta =</span> <span class="dv">5</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                                <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>btfl_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(btfl_data_zn<span class="sc">$</span>timeseries)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(btfl_dt[years <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim.id <span class="sc">==</span> <span class="dv">1</span>, .(doy,count)], <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">365</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_dt<span class="sc">$</span>count)))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(btfl_dt[years <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim.id <span class="sc">==</span> <span class="dv">1</span>, .(doy,act)], <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">'orange'</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(btfl_dt[years <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim.id <span class="sc">==</span> <span class="dv">2</span>, .(doy,count)], <span class="at">col =</span> <span class="st">'magenta'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="butterfly_counts_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -702,8 +871,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./Butterfly_monitoring.html" class="pagination-link" aria-label="Butterfly Monitoring">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Butterfly Monitoring</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
