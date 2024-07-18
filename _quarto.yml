@@ -4,7 +4,7 @@ project:
 
 book:
   title: "Butterfly Monitoring Analyses"
-  date: `r Sys.Date()`
+  date: "`r format(Sys.time(), '%d %B, %Y')`"
   author: 
   - name: Reto Schmucki
     orcid: 0000-0003-3064-7553
