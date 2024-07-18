@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Butterfly Monitoring Analyses",
     "section": "",
-    "text": "Preface\nThis project aims to collate documentation of methods used to analyze and work with Butterfly Monitoring Schemes (BMS) data. We focus on methods used to analyze count data associated to Pollard transects that represent the core of the eBMS database.",
+    "text": "Preface\nThis project aims to collate documentation of methods used to analyze and work with Butterfly Monitoring Schemes (BMS) data. We focus on methods used to analyze count data associated with Pollard transects that represent the core of the eBMS database.\n\nThis book project is a work in progress that only started. Reto Schmucki, July 2024",
     "crumbs": [
       "Preface"
     ]

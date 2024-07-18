@@ -4,7 +4,7 @@ project:
 
 book:
   title: "Butterfly Monitoring Analyses"
-  date: "16/07/2024"
+  date: `r Sys.Date()`
   author: 
   - name: Reto Schmucki
     orcid: 0000-0003-3064-7553
