@@ -15,13 +15,12 @@ if(!require("ggplot2")) install.packages("ggplot2")
 if(!require("devtools")) install.packages("devtools")
 if(!require("rbms")) devtools::install_github("RetoSchmucki/rbms")
 if(!require("butterflyGamSims")) devtools::install_github("cbedwards/butterflyGamSims")
-
-set.seed(13276)
 ```
 
 In the first case, we will simulate counts for one site for one year, using a Gaussian curve to depict the adult butterflies' seasonal phenology (activity curve). The daily counts are generated from a random Poisson process.
 
 ```{R}
+set.seed(13276)
 btfl_data <- timeseries_sim(nsims=1,
                year = c(2023),
                doy.samples = seq(from=1, to=365, by=1),
@@ -64,7 +63,7 @@ In the example above, the activity curve represented by the line has a Gaussian 
 
 ```{R}
 #| label: time-sample
-
+set.seed(132768)
 btfl_ts <- data.table(btfl_data$timeseries)
 btfl_ts[ , date := as.Date(doy, origin = "2023-01-01")-1]
 btfl_ts[ , week := isoweek(date)]
@@ -198,6 +197,8 @@ The same procedure can be applied to flight curves having more complex shapes. H
 #| messages: false
 #| warning: false
 
+set.seed(13276)
+
 btfl_data_zn <- timeseries_sim(nsims=1,
                year = c(2023),
                doy.samples = seq(from=1, to=365, by=1),
@@ -221,6 +222,7 @@ cnt_col <- 'darkcyan'
 missing_col <- 'red'
 GAM_col <- '#483d8b'
 
+set.seed(132768)
 btfl_ts <- data.table(btfl_data_zn$timeseries)
 btfl_ts[ , date := as.Date(doy, origin = "2023-01-01")-1]
 btfl_ts[ , week := isoweek(date)]
