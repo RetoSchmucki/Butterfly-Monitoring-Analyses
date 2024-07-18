@@ -71,9 +71,9 @@ btfl_week_smpl <- btfl_ts[btfl_ts[weekday %in% c(2,3,4,5), .I[sample(.N, 1)], by
 
 btfl_fig2 <- ggplot() +
                 geom_point(data=btfl_week_smpl, aes(x=doy, y=count, colour = "count")) + 
-                geom_line(data = btfl_dt2,
+                geom_line(data = btfl_ts,
                 aes(x = doy, y = act, colour = "activity")) +
-                xlim(1,365) + ylim(0, max(btfl_dt1$count, btfl_dt2$act)) + 
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_ts$act)) + 
                 scale_colour_manual("", 
                       breaks = c("count", "activity"),
                       values = c(cnt_col, flc_col)) +
@@ -100,9 +100,9 @@ btfl_fig3 <- ggplot() +
                 geom_point(data=btfl_week_smpl2, aes(x=doy, y=count, colour = "count")) + 
                 geom_point(data=btfl_week_missing, aes(x=doy, y=count, colour = "missing"), 
                             shape=4, size=2, stroke=2) + 
-                geom_line(data = btfl_dt2,
+                geom_line(data = btfl_ts,
                 aes(x = doy, y = act, colour = "activity")) +
-                xlim(1,365) + ylim(0, max(btfl_dt1$count, btfl_dt2$act)) + 
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_ts$act)) + 
                 scale_colour_manual("", 
                       breaks = c("count", "activity", "missing"),
                       values = c(cnt_col, flc_col, missing_col)) +
@@ -163,12 +163,11 @@ btfl_fig4 <- ggplot() +
                 geom_point(data=ts_season_count[ANCHOR == 0 & !is.na(COUNT), ], aes(x=DAY_SINCE, y=COUNT, colour = "count")) +
                 geom_point(data=btfl_week_missing, aes(x=doy, y=count, colour = "missing"), 
                             shape=4, size=2, stroke=2) + 
-                geom_line(data = btfl_dt2,
-                aes(x = doy, y = act, colour = "activity")) +
+                geom_line(data = btfl_ts, aes(x = doy, y = act, colour = "activity")) +
                 geom_line(data = pheno,
-                    aes(x = trimDAYNO, y = btfl_dt2[,sum(act)]*NM, colour = "GAM_fit")) +
-                xlim(1,365) + ylim(0, max(btfl_dt2$act, 
-                                          pheno$NM*btfl_dt2[,sum(act)], 
+                    aes(x = trimDAYNO, y = btfl_ts[,sum(act)]*NM, colour = "GAM_fit")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$act, 
+                                          pheno$NM*btfl_ts[,sum(act)], 
                                           btfl_week_missing$count, 
                                           ts_season_count[!is.na(COUNT), COUNT] )) + 
                 scale_colour_manual("", 
@@ -182,13 +181,18 @@ btfl_fig4
 
 ```
 
-## Non Gaussian flight curve 
-Here we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonhevel model.
+## Non Gaussian flight curve
+The same procedure can be applied to flight curves having more complex shapes. Here we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonneveld model.
 
 ```{R}
-btfl_data_zn <- timeseries_sim(nsims=10,
-               year = c(1:10),
-               doy.samples = seq(from=0, to=365, by=1),
+#| label: zonneveld-simulation
+#| results: hide
+#| messages: false
+#| warning: false
+
+btfl_data_zn <- timeseries_sim(nsims=1,
+               year = c(2023),
+               doy.samples = seq(from=1, to=365, by=1),
                abund.type = "exp",
                activity.type = "zon",
                sample.type = "nb",
@@ -203,10 +207,82 @@ btfl_data_zn <- timeseries_sim(nsims=10,
                                 alpha = 0.05)
                )
 
-btfl_dt <- data.table(btfl_data_zn$timeseries)
-plot(btfl_dt[years == 1 & sim.id == 1, .(doy,count)], xlim = c(0,365), ylim = c(0, max(btfl_dt$count)))
-points(btfl_dt[years == 1 & sim.id == 1, .(doy,act)], type = "l", col = 'orange')
-points(btfl_dt[years == 1 & sim.id == 2, .(doy,count)], col = 'magenta')
+
+flc_col <- 'orange'
+cnt_col <- 'darkcyan'
+missing_col <- 'red'
+GAM_col <- '#483d8b'
+
+btfl_ts <- data.table(btfl_data_zn$timeseries)
+btfl_ts[ , date := as.Date(doy, origin = "2023-01-01")-1]
+btfl_ts[ , week := isoweek(date)]
+btfl_ts[month(date) != 1 | week < 50, weekday := rowid(week)]
+btfl_week_smpl <- btfl_ts[btfl_ts[weekday %in% c(2,3,4,5), .I[sample(.N, 1)], by = week][[2]]]
+
+btfl_week_smpl2 <- btfl_week_smpl[month(date) %in% c(4:9), ]
+prob_vct <- rep(0.5,btfl_week_smpl2[,.N])
+prob_vct[1:round(quantile(seq_len(btfl_week_smpl2[,.N]), c(0.25)))] <- 0.75
+prob_vct[round(quantile(seq_len(btfl_week_smpl2[,.N]), c(0.75))):btfl_week_smpl2[,.N]] <- 0.75
+
+btfl_week_missing <- btfl_week_smpl2[-sample(.N, round(0.75*.N), prob = prob_vct), ]
+
+
+visit_sim <- btfl_week_smpl2[, site_id := "site_1"][!date %in% btfl_week_missing$date, .(site_id, date)]
+count_sim <- btfl_week_smpl2[, site_id := "site_1"][!date %in% btfl_week_missing$date, .(site_id, date, count)][
+                count>=1,][, species := "sp1"]
+
+names(visit_sim) <- toupper(names(visit_sim))
+names(count_sim) <- toupper(names(count_sim))
+
+ts_date <- rbms::ts_dwmy_table(InitYear = 2023, LastYear = 2023, WeekDay1 = 'monday')
+
+ts_season <- rbms::ts_monit_season(ts_date,
+                       StartMonth = 4,
+                       EndMonth = 9, 
+                       StartDay = 1,
+                       EndDay = NULL,
+                       CompltSeason = TRUE,
+                       Anchor = TRUE,
+                       AnchorLength = 2,
+                       AnchorLag = 2,
+                       TimeUnit = 'd')
+
+ts_season_visit <- rbms::ts_monit_site(ts_season, visit_sim)
+
+ts_season_count <- rbms::ts_monit_count_site(ts_season_visit, count_sim, sp = "sp1")
+
+ts_flight_curve <- rbms::flight_curve(ts_season_count, 
+                       NbrSample = 300,
+                       MinVisit = 5,
+                       MinOccur = 3,
+                       MinNbrSite = 1,
+                       MaxTrial = 4,
+                       GamFamily = 'nb',
+                       SpeedGam = FALSE,
+                       CompltSeason = TRUE,
+                       SelectYear = NULL,
+                       TimeUnit = 'd')
+
+pheno <- ts_flight_curve$pheno
+
+btfl_fig5 <- ggplot() +
+                geom_point(data=ts_season_count[ANCHOR == 0 & !is.na(COUNT), ], aes(x=DAY_SINCE, y=COUNT, colour = "count")) +
+                geom_point(data=btfl_week_missing, aes(x=doy, y=count, colour = "missing"), 
+                            shape=4, size=2, stroke=2) + 
+                geom_line(data = btfl_ts, aes(x = doy, y = act, colour = "activity")) +
+                geom_line(data = pheno, aes(x = trimDAYNO, y = btfl_ts[,sum(act)]*NM, colour = "GAM_fit")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$act, 
+                                          pheno$NM*btfl_ts[,sum(act)], 
+                                          btfl_week_missing$count, 
+                                          ts_season_count[!is.na(COUNT), COUNT] )) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity", "missing", "GAM_fit"),
+                      values = c(cnt_col, flc_col, missing_col, GAM_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = "Simulated butterfly counts - Zonneveld Model",
+                     subtitle = "- Fitting GAM model with rbms")
+btfl_fig5
 ```
 
 ## Simple trend case

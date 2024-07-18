@@ -100,9 +100,9 @@ btfl_fig3 <- ggplot() +
                 geom_point(data=btfl_week_smpl2, aes(x=doy, y=count, colour = "count")) + 
                 geom_point(data=btfl_week_missing, aes(x=doy, y=count, colour = "missing"), 
                             shape=4, size=2, stroke=2) + 
-                geom_line(data = btfl_dt2,
+                geom_line(data = btfl_ts,
                 aes(x = doy, y = act, colour = "activity")) +
-                xlim(1,365) + ylim(0, max(btfl_dt1$count, btfl_dt2$act)) + 
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_dt2$act)) + 
                 scale_colour_manual("", 
                       breaks = c("count", "activity", "missing"),
                       values = c(cnt_col, flc_col, missing_col)) +
@@ -111,6 +111,88 @@ btfl_fig3 <- ggplot() +
                 labs(title = "Simulated butterfly counts",
                      subtitle = "- weekly visit (random resampled)")
 btfl_fig3
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
