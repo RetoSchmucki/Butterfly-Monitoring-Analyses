@@ -43,7 +43,7 @@ bibliography: references.bib
 highlight-style: pygments
 
 execute:
-  cache: true
+  cache: false
 
 format:
   html:
