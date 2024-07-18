@@ -15,14 +15,14 @@ book:
         city: Crowmarsh Gilford, Wallingford
         state: Oxfordshire
         postal-code: OX10 8BB
-  - name: Dylan Carbone
-    email: dylcar@ceh.ac.uk
-    affiliations:
-      - name: UK Centre for Ecology & Hydrology
-        address: Maclean Building Benson lane
-        city: Crowmarsh Gilford, Wallingford
-        state: Oxfordshire
-        postal-code: OX10 8BB
+  # - name: Dylan Carbone
+  #   email: dylcar@ceh.ac.uk
+  #   affiliations:
+  #     - name: UK Centre for Ecology & Hydrology
+  #       address: Maclean Building Benson lane
+  #       city: Crowmarsh Gilford, Wallingford
+  #       state: Oxfordshire
+  #       postal-code: OX10 8BB
 
   search: true
   repo-url: https://github.com/RetoSchmucki/Butterfly-Monitoring-Analyses

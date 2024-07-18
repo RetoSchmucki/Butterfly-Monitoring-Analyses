@@ -2,7 +2,7 @@
 
 This project aims to collate documentation of methods used to analyze and work with Butterfly Monitoring Schemes (BMS) data. We focus on methods used to analyze count data associated with Pollard transects that represent the core of the eBMS database.
 
-> This book project is a work in progress that only started. 
+> ### NOTE - this book project is a work in progress that only started. 
 > Reto Schmucki, July 2024 
 
 
