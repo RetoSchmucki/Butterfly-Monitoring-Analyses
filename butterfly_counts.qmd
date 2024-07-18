@@ -54,7 +54,9 @@ btfl_fig <- ggplot() +
                 theme_light() + 
                 theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
                 labs(title = "Simulated butterfly counts",
-                     subtitle = "- daily visit")
+                     subtitle = "- daily visit",
+                     x = "Day of Year",
+                     y = "Count")
 btfl_fig
 ```
 
@@ -80,7 +82,9 @@ btfl_fig2 <- ggplot() +
                 theme_light() + 
                 theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
                 labs(title = "Simulated butterfly counts",
-                     subtitle = "- weekly visit (random resampled)")
+                     subtitle = "- weekly visit (random resampled)",
+                     x = "Day of Year",
+                     y = "Count")
 btfl_fig2
 ```
 
@@ -109,7 +113,9 @@ btfl_fig3 <- ggplot() +
                 theme_light() + 
                 theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
                 labs(title = "Simulated butterfly counts",
-                     subtitle = "- weekly visit (random resampled)")
+                     subtitle = "- weekly visit (random resampled)",
+                     x = "Day of Year",
+                     y = "Count")
 btfl_fig3
 ```
 
@@ -176,7 +182,9 @@ btfl_fig4 <- ggplot() +
                 theme_light() + 
                 theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
                 labs(title = "Simulated butterfly counts",
-                     subtitle = "- Fitting GAM model with rbms")
+                     subtitle = "- Fitting GAM model with rbms",
+                     x = "Day of Year",
+                     y = "Count")
 btfl_fig4
 
 ```
@@ -281,7 +289,9 @@ btfl_fig5 <- ggplot() +
                 theme_light() + 
                 theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
                 labs(title = "Simulated butterfly counts - Zonneveld Model",
-                     subtitle = "- Fitting GAM model with rbms")
+                     subtitle = "- Fitting GAM model with rbms",
+                     x = "Day of Year",
+                     y = "Count")
 btfl_fig5
 ```
 
