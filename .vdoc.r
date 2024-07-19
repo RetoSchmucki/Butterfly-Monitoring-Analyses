@@ -92,25 +92,56 @@
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #| label: sample-season-missing
 
-sample_missing <- function(data, quantile_breaks = c(0.20, 0.35, 0.65, 0.80), quantile_probs = c(0.25, 0.5, 0.75)){
-      prob_vct <- rep(quantile_probs[1], data[,.N])
-      prob_vct[round(quantile(seq_len(data[,.N]), quantile_breaks[1])):round(quantile(seq_len(data[,.N]), quantile_breaks[2]))] <- quantile_probs[2]
-      prob_vct[round(quantile(seq_len(data[,.N]), quantile_breaks[3])):round(quantile(seq_len(data[,.N]), quantile_breaks[4]))] <- quantile_probs[2]
-      prob_vct[1:round(quantile(seq_len(data[,.N]), quantile_breaks[1]))] <- quantile_probs[3]
-      prob_vct[round(quantile(seq_len(data[,.N]), quantile_breaks[4])):data[,.N]] <- quantile_probs[3]
-      btfl_week_missing <- data[sample(seq_len(.N), round(0.25*.N), prob = prob_vct/sum(prob_vct)), ]
-  return(btfl_week_missing)
-}
+missing_prob <- function(data, mu=NULL, alpha = 5, theta = 0.3){
+                              x_ <- seq_len(nrow(data))
+                              mu_ <- ifelse(is.null(mu), length(x_) / 2, mu)
+                              std_ <- sqrt(mu_ / theta)
+                              y_ <- abs((alpha * exp((-(x_ - mu_)^2) / std_^2)) - alpha) + alpha
+                              yn_ <- y_ / (sum(y_))
+                        return(yn)
+                  }
 
-btfl_week_missing <- data.table()
+sample_missing <- function(data, propMissing = 0.25){
+            missing.prob <- data.table::data.table()
+            for(i in data[, unique(years)]){
+                  for(j in data[, unique(site_id)]){
+                  missing.prob <- rbind(missing.prob, missing_prob(data[years == i & site_id == j, ]))
+                  }
+            }
+            missing.week <- data[sample(seq_len(.N), round(propMissing * .N), prob = unlist(missing.prob)), ]  
+      return(missing.week)
+}
+missing_prob_vector <- data.table()
 
 for(i in btfl_week_smpl[, unique(years)]){
       for(j in btfl_week_smpl[, unique(site_id)]){
-            btfl_week_missing <- rbind(btfl_week_missing, sample_missing(data  = btfl_week_smpl[years == i & site_id == j, ]))
+            missing_prob_vector <- rbind(missing_prob_vector, missing_prob(data  = btfl_week_smpl[years == i & site_id == j, ]))
       }
 }
+
+btfl_week_missing <- btfl_week_smpl[sample(seq_len(.N), round(0.25*.N), prob = unlist(missing_prob_vector)), ]
+btfl_week_missing <- sample_missing(data = btfl_week_smpl, propMissing = 0.25)
 
 btfl_fig3 <- ggplot() +
                 geom_point(data=btfl_week_smpl, aes(x=doy, y=count, colour = "count")) + 
@@ -129,6 +160,11 @@ btfl_fig3 <- ggplot() +
                      x = "Day of Year",
                      y = "Count")
 btfl_fig3
+#
+#
+#
+#
+#
 #
 #
 #
