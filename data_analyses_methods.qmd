@@ -1,0 +1,15 @@
+# Data Analyses and Methods {.unnumbered}
+
+> Content under construction
+
+Biodiversity monitoring plays a crucial role in generating metrics and knowledge to improve our understanding of the status and trends of biodiversity. By integrating new information with existing knowledge, as limited it may be, we can update our understanding and thereby improve our ability to inform action and support decision-making. Analysis of monitoring data can take various forms, from simple data exploration to the development of complex statistical models. Regardless of the level of complexity, the main goal of analysis remains the same - to derive relevant information from the data to improve our understanding.
+
+There are several methods for extracting information from monitoring data, and each method is based on a set of assumptions. A fundamental assumption for any monitoring program is that the data are only representative of the sampled population. Depending on how the data are collected, the sample may accurately represent the population of interest, or it may be biased and provide only a skewed representation of the population. It is important to understand how the specific sampling protocol may affect the representativeness of the data and what potential biases should be considered when analyzing the data. In order to develop robust monitoring methods and analyze the incoming data appropriately, it is important to consider the data generation process associated with the subject (organism) of interest and how the monitoring protocol may affect the data and the information it contains.
+
+
+## Data Simulation
+Why rely on simulated data?
+
+## Statistical Modelling
+
+## From Counts to Models

@@ -1,8 +1,5 @@
 # Butterfly Counts {.unnumbered}
 
-## Data Simulation
-Why rely on simulated data?
-
 ## Simulation of Butterfly Counts
 To demonstrate and assess the method used to compute butterfly abundance indices and the Grassland Butterfly Indicator which involves calculating collated abundance indices from multiple sites and estimating the population trend from a set of indicator species, the best option is to use simulated datasets that provide realistic data with known parameters. The simulation approach allows us to assess the methods' performance and enables us to control individual parameters and conduct rigorous sensitivity analysis. This will provide useful insight into the method and enable rigorous assessment of its power and limitations. 
 

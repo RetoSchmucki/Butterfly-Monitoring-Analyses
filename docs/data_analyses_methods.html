@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Butterfly Monitoring – Butterfly Monitoring and Analyses</title>
+<title>Data Analyses and Methods – Butterfly Monitoring and Analyses</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./data_analyses_methods.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./butterfly_counts.html" rel="next">
+<link href="./Butterfly_monitoring.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Butterfly_monitoring.html">Counting Butterflies</a></li><li class="breadcrumb-item"><a href="./Butterfly_monitoring.html">Butterfly Monitoring</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analyses_methods.html">From Counts to FLight Curves</a></li><li class="breadcrumb-item"><a href="./data_analyses_methods.html">Data Analyses and Methods</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -127,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Butterfly_monitoring.html" class="sidebar-item-text sidebar-link active">
+  <a href="./Butterfly_monitoring.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Butterfly Monitoring</span></a>
   </div>
 </li>
@@ -144,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data_analyses_methods.html" class="sidebar-item-text sidebar-link">
+  <a href="./data_analyses_methods.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Data Analyses and Methods</span></a>
   </div>
 </li>
@@ -161,15 +161,23 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-simulation" id="toc-data-simulation" class="nav-link active" data-scroll-target="#data-simulation">Data Simulation</a></li>
+  <li><a href="#statistical-modelling" id="toc-statistical-modelling" class="nav-link" data-scroll-target="#statistical-modelling">Statistical Modelling</a></li>
+  <li><a href="#from-counts-to-models" id="toc-from-counts-to-models" class="nav-link" data-scroll-target="#from-counts-to-models">From Counts to Models</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Butterfly_monitoring.html">Counting Butterflies</a></li><li class="breadcrumb-item"><a href="./Butterfly_monitoring.html">Butterfly Monitoring</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analyses_methods.html">From Counts to FLight Curves</a></li><li class="breadcrumb-item"><a href="./data_analyses_methods.html">Data Analyses and Methods</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Butterfly Monitoring</h1>
+<h1 class="title">Data Analyses and Methods</h1>
 </div>
 
 
@@ -189,8 +197,20 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>Content under construction</p>
 </blockquote>
+<p>Biodiversity monitoring plays a crucial role in generating metrics and knowledge to improve our understanding of the status and trends of biodiversity. By integrating new information with existing knowledge, as limited it may be, we can update our understanding and thereby improve our ability to inform action and support decision-making. Analysis of monitoring data can take various forms, from simple data exploration to the development of complex statistical models. Regardless of the level of complexity, the main goal of analysis remains the same - to derive relevant information from the data to improve our understanding.</p>
+<p>There are several methods for extracting information from monitoring data, and each method is based on a set of assumptions. A fundamental assumption for any monitoring program is that the data are only representative of the sampled population. Depending on how the data are collected, the sample may accurately represent the population of interest, or it may be biased and provide only a skewed representation of the population. It is important to understand how the specific sampling protocol may affect the representativeness of the data and what potential biases should be considered when analyzing the data. In order to develop robust monitoring methods and analyze the incoming data appropriately, it is important to consider the data generation process associated with the subject (organism) of interest and how the monitoring protocol may affect the data and the information it contains.</p>
+<section id="data-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="data-simulation">Data Simulation</h2>
+<p>Why rely on simulated data?</p>
+</section>
+<section id="statistical-modelling" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-modelling">Statistical Modelling</h2>
+</section>
+<section id="from-counts-to-models" class="level2">
+<h2 class="anchored" data-anchor-id="from-counts-to-models">From Counts to Models</h2>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -615,13 +635,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./Butterfly_monitoring.html" class="pagination-link" aria-label="Butterfly Monitoring">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Butterfly Monitoring</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./data_analyses_methods.html" class="pagination-link" aria-label="Data Analyses and Methods">
-        <span class="nav-page-text">Data Analyses and Methods</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./butterfly_counts.html" class="pagination-link" aria-label="Butterfly Counts">
+        <span class="nav-page-text">Butterfly Counts</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -21,6 +21,39 @@
     ]
   },
   {
+    "objectID": "data_analyses_methods.html",
+    "href": "data_analyses_methods.html",
+    "title": "Data Analyses and Methods",
+    "section": "",
+    "text": "Data Simulation\nWhy rely on simulated data?",
+    "crumbs": [
+      "From Counts to FLight Curves",
+      "Data Analyses and Methods"
+    ]
+  },
+  {
+    "objectID": "data_analyses_methods.html#statistical-modelling",
+    "href": "data_analyses_methods.html#statistical-modelling",
+    "title": "Data Analyses and Methods",
+    "section": "Statistical Modelling",
+    "text": "Statistical Modelling",
+    "crumbs": [
+      "From Counts to FLight Curves",
+      "Data Analyses and Methods"
+    ]
+  },
+  {
+    "objectID": "data_analyses_methods.html#from-counts-to-models",
+    "href": "data_analyses_methods.html#from-counts-to-models",
+    "title": "Data Analyses and Methods",
+    "section": "From Counts to Models",
+    "text": "From Counts to Models",
+    "crumbs": [
+      "From Counts to FLight Curves",
+      "Data Analyses and Methods"
+    ]
+  },
+  {
     "objectID": "butterfly_counts.html",
     "href": "butterfly_counts.html",
     "title": "Butterfly Counts",

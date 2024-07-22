@@ -35,6 +35,7 @@ book:
       -  Butterfly_monitoring.qmd 
     - part: "From Counts to FLight Curves"
       chapters:
+      - data_analyses_methods.qmd
       - butterfly_counts.qmd
   # - part: "Bibliography"
   #   - references.qmd
