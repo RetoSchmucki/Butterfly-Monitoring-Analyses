@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "Butterfly Monitoring Analyses"
+  title: "Butterfly Monitoring and Analyses"
   date: today
   author: 
   - name: Reto Schmucki
