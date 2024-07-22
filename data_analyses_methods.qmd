@@ -8,7 +8,7 @@ There are several methods for extracting information from monitoring data, and e
 
 ## Data Simulation
 
-To better understand the influence of species biology and sampling protocols on data generation, we will rely on data simulation approaches. Data simulation involves generating random data sets based on certain rules and known parameters. It is useful not only to show how certain processes affect a dataset and create systematic patterns, but also to test methods and gain a better understanding of how they work and where they may fail. 
+To better understand the influence of species biology and sampling protocols on data generation, we will rely on data simulation approaches. Data simulation involves generating random data sets based on certain rules and known parameters. It is useful not only to show the outcome of certain ecological and sampling processes and illustrate how they can shape systematic patterns in the data but also to test methods and gain a better understanding of how the statistical models work and where they may fail. 
 
 When carefully designed, data simulations can be a powerful tool for testing and validating methods as well as performing sensitivity analyzes to assess their robustness to violations of underlying assumptions. Simulated data sets enable the exploration of model behavior and help to identify their strengths and limitations. In the following sections, we will use data simulations to illustrate and explore the different components of butterfly monitoring data when generated under different scenarios. Using these simulations, we will demonstrate the modeling process and the type of information that can be extracted from the different approaches used to analyze butterfly count data.
 

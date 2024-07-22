@@ -272,6 +272,8 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="simulation-tool-for-butterflies-and-other-phenologies">Simulation Tool for Butterflies and Other Phenologies</h3>
 <p>To simulate butterfly count across sites and over multiple iterations, we will use the function developed by Collin Edwards and available in the <a href="https://github.com/cbedwards/butterflyGamSims/tree/main">R packages butterflyGamSims</a>.</p>
 <div class="cell" data-messages="false">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"data.table"</span>)) <span class="fu">install.packages</span>(<span class="st">"data.table"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"ggplot2"</span>)) <span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"devtools"</span>)) <span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
@@ -282,9 +284,12 @@ window.Quarto = {
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cnt_col <span class="ot">&lt;-</span> <span class="st">'darkcyan'</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>missing_col <span class="ot">&lt;-</span> <span class="st">'red'</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>GAM_col <span class="ot">&lt;-</span> <span class="st">'#483d8b'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>In the first case, we will simulate counts for one site for one year, using a Gaussian curve to depict the adult butterflies’ seasonal phenology (activity curve). The daily counts are generated from a random Poisson process.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>btfl_data <span class="ot">&lt;-</span> <span class="fu">timeseries_sim</span>(<span class="at">nsims=</span><span class="dv">1</span>,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2023</span><span class="sc">:</span><span class="dv">2025</span>),</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">doy.samples =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">365</span>, <span class="at">by=</span><span class="dv">1</span>),</span>
@@ -296,12 +301,15 @@ window.Quarto = {
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.mean =</span> <span class="dv">175</span>,</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.sd =</span> <span class="dv">15</span>)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>               )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 </section>
 <section id="simulate-data-sampling-process" class="level2">
 <h2 class="anchored" data-anchor-id="simulate-data-sampling-process">Simulate Data Sampling Process</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data: Time series resulting from the simulation generated for 365 days</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># weeklySample: TRUE or FALSE; should the daily count in the time series be resampled weekly?</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># weekdayKeep: vector of days c(1,2,..., 7) to be sampled from for the weekly count. If the vector</span></span>
@@ -328,8 +336,11 @@ window.Quarto = {
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                  }</span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(btfl_ts)</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2023</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>btfl_ts <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y)</span>
@@ -349,6 +360,7 @@ window.Quarto = {
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>btfl_fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -359,6 +371,8 @@ window.Quarto = {
 </div>
 <p>In the example above, the activity curve represented by the line has a Gaussian shape and counts presented by the points along the curve are independent random samples from a Poisson distribution. Because we sampled a count value for 365 days (day-of-year; doy), the counts are representative of the population of active adult butterflies as if the site was visited every. This implies that a proportion of butterflies are counted more than one day as their lifespan exceeds one day. On Pollard transect, this is how butterfly counts are likely to be counted and reported, but with a different frequency as visits are generally weekly, fortnightly, or even monthly. We can replicate this value by resampling the daily count weekly.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">13276</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y, </span>
@@ -381,6 +395,7 @@ window.Quarto = {
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -391,6 +406,8 @@ window.Quarto = {
 </div>
 <p>From the weekly visits, counts outside of the monitoring period will not be informed, in many cases these are ‘zeros’ as we expect the monitoring season to align with butterflies’ activity. Some other weeks might be missing from the time series, potentially due to unsuitable weather conditions for monitoring or recorder’s unavailability. We can include these missing visits by resampling a subset of the weekly counts.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>missing_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">mu=</span><span class="cn">NULL</span>, <span class="at">alpha =</span> <span class="dv">5</span>, <span class="at">theta =</span> <span class="fl">0.3</span>){</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                              x_ <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(data))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                              mu_ <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.null</span>(mu), <span class="fu">length</span>(x_) <span class="sc">/</span> <span class="dv">2</span>, mu)</span>
@@ -433,6 +450,7 @@ window.Quarto = {
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
 <span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
 <span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>btfl_fig3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -448,6 +466,8 @@ window.Quarto = {
 <section id="organising-bms-count-data" class="level3">
 <h3 class="anchored" data-anchor-id="organising-bms-count-data">Organising BMS count data</h3>
 <div class="cell" data-messages="false">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>visit_sim <span class="ot">&lt;-</span> btfl_week_smpl[<span class="sc">!</span>date <span class="sc">%in%</span> btfl_week_missing<span class="sc">$</span>date, .(site_id, date, count)]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>count_sim <span class="ot">&lt;-</span> visit_sim[count<span class="sc">&gt;=</span><span class="dv">1</span>,][, species <span class="sc">:</span><span class="er">=</span> <span class="st">"sp1"</span>]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -470,11 +490,14 @@ window.Quarto = {
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>ts_season_visit <span class="ot">&lt;-</span> rbms<span class="sc">::</span><span class="fu">ts_monit_site</span>(ts_season, visit_sim)</span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>ts_season_count <span class="ot">&lt;-</span> rbms<span class="sc">::</span><span class="fu">ts_monit_count_site</span>(ts_season_visit, count_sim, <span class="at">sp =</span> <span class="st">"sp1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="fitting-a-gam-to-butterfly-counts" class="level3">
 <h3 class="anchored" data-anchor-id="fitting-a-gam-to-butterfly-counts">Fitting a GAM to Butterfly Counts</h3>
 <div class="cell" data-messages="false">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ts_flight_curve <span class="ot">&lt;-</span> rbms<span class="sc">::</span><span class="fu">flight_curve</span>(ts_season_count, </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">NbrSample =</span> <span class="dv">300</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">MinVisit =</span> <span class="dv">5</span>,</span>
@@ -486,9 +509,12 @@ window.Quarto = {
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">CompltSeason =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SelectYear =</span> <span class="cn">NULL</span>,</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">TimeUnit =</span> <span class="st">'d'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The flight curve computed by the <code>rbms::flight_curve()</code> function is stored in the …$pheno object where the days of year are stored under the variable <code>trimDAYNO</code> and the standardized flight curve under the variable <code>NM</code>. The <code>NM</code> variable is scaled to an Area Under the Curve (AUC) that sum to 1. To compare the flight curve derived from the GAM with the activity curve used for the simulation, we must rescale them to the same AUC, in other words, we must rescale the activity curve to have an AUC of 1 or rescale the <code>NM</code> to the population size used for the simulation. Here we will rescale the <code>NM</code> to match the simulation population size, this will allow us to display the curves and the counts on the same plot with the correct scale.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> ts_flight_curve<span class="sc">$</span>pheno</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>btfl_fig4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -512,6 +538,7 @@ window.Quarto = {
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>btfl_fig4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -524,12 +551,15 @@ window.Quarto = {
 <p><span class="math display">\[
    RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^n \left( y_i - \tilde{y}_i\right)}
 \]</span></p>
+<p>where <span class="math inline">\(y_i\)</span> is the <code>NM</code> value at time <span class="math inline">\(i\)</span> and <span class="math inline">\(\tilde{y}_i\)</span> the value from the standardized activity curve at time <span class="math inline">\(i\)</span>, from day <span class="math inline">\(1\)</span> to <span class="math inline">\(n\)</span> of the monitoring season.</p>
 </section>
 </section>
 <section id="non-gaussian-flight-curve" class="level2">
 <h2 class="anchored" data-anchor-id="non-gaussian-flight-curve">Non Gaussian flight curve</h2>
 <p>The same procedure can be applied to flight curves having more complex shapes. Here we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonneveld model.</p>
 <div class="cell" data-messages="false">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>btfl_data_zn <span class="ot">&lt;-</span> <span class="fu">timeseries_sim</span>(<span class="at">nsims=</span><span class="dv">1</span>,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2023</span>),</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">doy.samples =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">365</span>, <span class="at">by=</span><span class="dv">1</span>),</span>
@@ -618,6 +648,7 @@ window.Quarto = {
 <span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
 <span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
 <span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>btfl_fig5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

@@ -278,6 +278,7 @@ $$
    RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^n \left( y_i - \tilde{y}_i\right)}
 $$
 
+where $y_i$ is the `NM` value at time $i$ and $\tilde{y}_i$ the value from the standardized activity curve at time $i$, from day $1$ to $n$ of the monitoring season. 
 
 ## Non Gaussian flight curve
 The same procedure can be applied to flight curves having more complex shapes. Here we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonneveld model.

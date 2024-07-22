@@ -52,6 +52,7 @@ format:
     linkcolor: 'darkcyan'
     code-block-bg: '#F5F5F2'
     code-block-border-left: true
+    code-fold: true
 
   pdf:
     documentclass: book
