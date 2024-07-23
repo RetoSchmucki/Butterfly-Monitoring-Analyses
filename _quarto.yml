@@ -37,8 +37,9 @@ book:
       chapters:
       - data_analyses_methods.qmd
       - butterfly_counts.qmd
-  # - part: "Bibliography"
-  #   - references.qmd
+    - part: "Bibliography"
+      chapters:
+      - references.qmd
   
 bibliography: references.bib
 highlight-style: pygments
@@ -49,13 +50,13 @@ execute:
 format:
   html:
     theme: cosmo
-    linkcolor: 'darkcyan'
+    linkcolor: '#008b8b'
     code-block-bg: '#F5F5F2'
     code-block-border-left: true
     code-fold: true
 
   pdf:
     documentclass: book
-    linkcolor: 'darkcyan'
+    linkcolor: '#008b8b'
     code-block-bg: '#F5F5F2'
     code-block-border-left: true

@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,6 +84,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
 <link href="./data_analyses_methods.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -218,6 +239,23 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bibliography</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -268,9 +306,6 @@ window.Quarto = {
 <section id="simulation-of-butterfly-counts" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-of-butterfly-counts">Simulation of Butterfly Counts</h2>
 <p>To demonstrate and assess the method used to compute butterfly abundance indices and the Grassland Butterfly Indicator which involves calculating collated abundance indices from multiple sites and estimating the population trend from a set of indicator species, the best option is to use simulated datasets that provide realistic data with known parameters. The simulation approach allows us to assess the methods’ performance and enables us to control individual parameters and conduct rigorous sensitivity analysis. This will provide useful insight into the method and enable rigorous assessment of its power and limitations.</p>
-<section id="simulation-tool-for-butterflies-and-other-phenologies" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-tool-for-butterflies-and-other-phenologies">Simulation Tool for Butterflies and Other Phenologies</h3>
-<p>To simulate butterfly count across sites and over multiple iterations, we will use the function developed by Collin Edwards and available in the <a href="https://github.com/cbedwards/butterflyGamSims/tree/main">R packages butterflyGamSims</a>.</p>
 <div class="cell" data-messages="false">
 <details class="code-fold">
 <summary>Code</summary>
@@ -278,133 +313,336 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"ggplot2"</span>)) <span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"devtools"</span>)) <span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"rbms"</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"RetoSchmucki/rbms"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"butterflyGamSims"</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"cbedwards/butterflyGamSims"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>flc_col <span class="ot">&lt;-</span> <span class="st">'orange'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cnt_col <span class="ot">&lt;-</span> <span class="st">'darkcyan'</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>missing_col <span class="ot">&lt;-</span> <span class="st">'red'</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>GAM_col <span class="ot">&lt;-</span> <span class="st">'#483d8b'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>flc_col <span class="ot">&lt;-</span> <span class="st">'#ff8c00'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>cnt_col <span class="ot">&lt;-</span> <span class="st">'#008b8b'</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>missing_col <span class="ot">&lt;-</span> <span class="st">'#8b0000'</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>GAM_col <span class="ot">&lt;-</span> <span class="st">'#483d8b'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>In the first case, we will simulate counts for one site for one year, using a Gaussian curve to depict the adult butterflies’ seasonal phenology (activity curve). The daily counts are generated from a random Poisson process.</p>
-<div class="cell">
+<section id="simulation-tool-for-butterflies-and-other-phenologies" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-tool-for-butterflies-and-other-phenologies">Simulation Tool for Butterflies and Other Phenologies</h3>
+<p>In the first case, we will simulate counts for one site for one year (e.g.&nbsp;2023), using a Gaussian curve to depict the shape of adult butterflies’ seasonal phenology (activity curve). We will use the function <code>timeseries_sim()</code> from the R package <code>butterflyGamSims</code> developed by Collin Edwards <span class="citation" data-cites="edwardsEstimatingButterflyPopulation2023">(see <a href="references.html#ref-edwardsEstimatingButterflyPopulation2023" role="doc-biblioref">Edwards et al. 2023</a>)</span>, available on <a href="https://github.com/cbedwards/butterflyGamSims/tree/main">GitHub</a>. This function will allow us to generate butterfly counts for one or multiple sites (iterations), using a specific shape, position (peak), period, sampling process and initial abundance. For multi-year time series, we can also define a growth rate (temporal trend).</p>
+<div class="cell" data-messages="false">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>btfl_data <span class="ot">&lt;-</span> <span class="fu">timeseries_sim</span>(<span class="at">nsims=</span><span class="dv">1</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2023</span><span class="sc">:</span><span class="dv">2025</span>),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">doy.samples =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">365</span>, <span class="at">by=</span><span class="dv">1</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">abund.type =</span> <span class="st">"exp"</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">activity.type =</span> <span class="st">"gauss"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">sample.type =</span> <span class="st">"pois"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">sim.parms =</span> <span class="fu">list</span>(<span class="at">growth.rate =</span> <span class="dv">0</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">init.size =</span> <span class="dv">500</span>, </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.mean =</span> <span class="dv">175</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.sd =</span> <span class="dv">15</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>               )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">13276</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">"butterflyGamSims"</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"cbedwards/butterflyGamSims"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>btfl_data <span class="ot">&lt;-</span> <span class="fu">timeseries_sim</span>(<span class="at">nsims=</span><span class="dv">1</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2023</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">doy.samples =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">365</span>, <span class="at">by=</span><span class="dv">1</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">abund.type =</span> <span class="st">"exp"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">activity.type =</span> <span class="st">"gauss"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">sample.type =</span> <span class="st">"pois"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">sim.parms =</span> <span class="fu">list</span>(<span class="at">growth.rate =</span> <span class="dv">0</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">init.size =</span> <span class="dv">500</span>, </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.mean =</span> <span class="dv">175</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                <span class="at">act.sd =</span> <span class="dv">15</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>               )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>The object produced by the <code>timeseries_sim()</code> function contains 1) a <code>data.frame</code> NAME$timeseries with the time series and 2) a <code>data.frame</code> NAME$parms with the parameters used for the simulation. In the parameters, you will find the population growth rate (<code>growth.rate</code>), the initial population size (<code>init. size</code>) measure in number of individuals expected over the season, the peak of the activity curve (<code>act.mean</code>) measured in days and the width of the activity curve (<code>act.sd</code>) that is measured in standard deviation. Note that not all sampling parameters used for the simulation are included in the parms object; the <code>activity.type</code> (the distribution function used to define the activity curve), the <code>sample.type</code> (the sampling process used to sample random counts along the activity curve) and the <code>abund.type</code> (the type of the growth rate, deterministic or with a log-normal process error) are missing.</p>
 </section>
 </section>
 <section id="simulate-data-sampling-process" class="level2">
 <h2 class="anchored" data-anchor-id="simulate-data-sampling-process">Simulate Data Sampling Process</h2>
+<p>With the <code>timeseries_sim()</code> function above, we simulated a regular time series of butterfly counts where the actual number of active butterfly of each day are draw from a Poisson distribution with a given expectation defined by the activity curve along a day-of-year vector <span class="math inline">\(j\)</span> following the probability density of a normal distribution (Gaussian) with mean equal to the peak day <span class="math inline">\(\mu\)</span> (<code>act.mean</code>) and a standard deviation <span class="math inline">\(\alpha\)</span> (<code>act.sd</code>). Because the integral of the probability density distribution (area under the curve) sum to 1, we can multiply the density by the abundance to retrieve a vector of expected abundance for each day-of-year, <span class="math inline">\(\lambda_j\)</span>.</p>
+<p><span class="math display">\[
+\lambda_j = abundance * \frac{1}{\alpha \sqrt{2 \pi}} \exp \left(- \frac{1}{2} \left( \frac{\left(j - \mu\right)}{\alpha}\right)^2\right)
+\]</span></p>
+<p>From the activity curve, we can use the <code>rpois()</code> function in R to draw a random value from a Poisson distribution, representing the count of events for day <span class="math inline">\(j\)</span>, where <span class="math inline">\(n = 1\)</span> and the mean is specified by expected value <span class="math inline">\(\lambda\)</span> at day <span class="math inline">\(j\)</span>.</p>
+<p><span class="math display">\[
+y_j = rpois(n, \lambda_j)
+\]</span></p>
+<p>From this simulation, we have generated the ecological process for the butterfly counts, for a given abundance distributed over a specific phenology defined by a Gaussian curve with a peak (mean) and a breath (standard deviation).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data: Time series resulting from the simulation generated for 365 days</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># weeklySample: TRUE or FALSE; should the daily count in the time series be resampled weekly?</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># weekdayKeep: vector of days c(1,2,..., 7) to be sampled from for the weekly count. If the vector</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># contains c(2,3,4), the sampling process will be restricted to Tuesday, Wednesday or Thursday.</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># monitoringSeason: vector of months that define the monitoring season (e.g. April to September is c(4:9)). </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>sim2bms <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">yearKeep =</span> <span class="cn">NULL</span>, <span class="at">weeklySample =</span> <span class="cn">FALSE</span>, <span class="at">weekdayKeep =</span> <span class="cn">NULL</span>, <span class="at">monitoringSeason =</span> <span class="cn">NULL</span>){</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                  </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                  btfl_ts <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">data.table</span>(data)[, site_id <span class="sc">:</span><span class="er">=</span> <span class="fu">paste0</span>(<span class="st">"site_"</span>,sim.id)]</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(yearKeep)){</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                        btfl_ts <span class="ot">&lt;-</span> btfl_ts[years <span class="sc">%in%</span> yearKeep, ]</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                  }</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                  btfl_ts[ , date <span class="sc">:</span><span class="er">=</span> <span class="fu">as.Date</span>(doy, <span class="at">origin =</span> <span class="fu">paste0</span>(years, <span class="st">"-01-01"</span>))<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                  btfl_ts[ , week <span class="sc">:</span><span class="er">=</span> <span class="fu">isoweek</span>(date)]</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                  btfl_ts[<span class="fu">month</span>(date) <span class="sc">!=</span> <span class="dv">1</span> <span class="sc">|</span> week <span class="sc">&lt;</span> <span class="dv">50</span>, weekday <span class="sc">:</span><span class="er">=</span> <span class="fu">rowid</span>(week), by <span class="ot">=</span> .(site_id, years)]</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span>(<span class="fu">isTRUE</span>(weeklySample)){</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(weekdayKeep)){</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                              btfl_ts <span class="ot">&lt;-</span> btfl_ts[weekday <span class="sc">%in%</span> weekdayKeep, ]</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                        }</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                        btfl_ts <span class="ot">&lt;-</span> btfl_ts[btfl_ts[,.I[<span class="fu">sample</span>(.N, <span class="dv">1</span>)], by <span class="ot">=</span> .(week, site_id, years)][[<span class="st">"V1"</span>]],]</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                  }</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(monitoringSeason)){</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                  btfl_ts <span class="ot">&lt;-</span> btfl_ts[<span class="fu">month</span>(date) <span class="sc">%in%</span> monitoringSeason, ]</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                  }</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(btfl_ts)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2023</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>btfl_ts <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>btfl_fig <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_ts, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- daily visit"</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>btfl_fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(btfl_data<span class="sc">$</span>timeseries[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">160</span><span class="sc">:</span><span class="dv">163</span>,<span class="dv">250</span><span class="sc">:</span><span class="dv">253</span>),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
+<table class="caption-top table table-sm table-striped small">
+<caption>Butterfly Simmulation Data</caption>
+<colgroup>
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">years</th>
+<th style="text-align: right;">doy</th>
+<th style="text-align: right;">count</th>
+<th style="text-align: right;">act</th>
+<th style="text-align: right;">abund.true</th>
+<th style="text-align: right;">onset.true</th>
+<th style="text-align: right;">median.true</th>
+<th style="text-align: right;">end.true</th>
+<th style="text-align: right;">fp.true</th>
+<th style="text-align: right;">sim.id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">160</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8.0656908</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">161</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">8.6025942</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">162</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">9.1345489</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">163</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9.6563851</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">250</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000496</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">251</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">251</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000354</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">252</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">252</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000252</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">253</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000179</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">155.8</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">194.2</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><br></p>
+<p>The additional structure resulting from the monitoring protocol (observation process) can now be added to the simulated time series and replicate a specific protocol. In this first case, we will simulate a protocol with weekly visits and include some missing counts for weeks when the minimal monitoring conditions were not met or the observer was absent. For this, we will write some new R functions. The first function will define the start and end of the monitoring season and sample one monitoring day per week over the season. Then we will write functions to simulate a certain level of missing weekly visits within the season. The likelihood of missing weeks tends to be higher at the beginning and the end of the season and lower in the middle. Let’s start with the first function that defines the monitoring season and resamples one day of the simulated time series every week. We will name the function <code>sim2bms()</code> as it aligns the simulated time series to the protocol of a specific Butterfly Monitoring Scheme (BMS). The function needs the time series, and additional arguments to define the year that we want to extract <code>yearKeep</code>, if the time series must be resampled weekly <code>weeklySample</code>, which day should be used for the weekly resampling <code>weekdayKeep</code> (this can be a vector of days, e.g.&nbsp;c(2,3,4,5), or a specific day), and finally the monitoring season <code>monitoringSeason</code> which correspond to a vector of months, e.g c(4,5,6,7,8,9) represent a season starting in April and ending in September. Note that this function will also add some new variables such as the date, the ISO week number and the day of the week.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data: Time series resulting from the simulation generated for 365 days</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># weeklySample: TRUE or FALSE; should the daily count in the time series be resampled weekly?</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># weekdayKeep: vector of days c(1,2,..., 7) to be sampled from for the weekly count. If the vector</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># contains c(2,3,4), the sampling process will be restricted to Tuesday, Wednesday or Thursday.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># monitoringSeason: vector of months that define the monitoring season (e.g. April to September is c(4:9)). </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>sim2bms <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">yearKeep =</span> <span class="cn">NULL</span>, <span class="at">weeklySample =</span> <span class="cn">FALSE</span>, <span class="at">weekdayKeep =</span> <span class="cn">NULL</span>, <span class="at">monitoringSeason =</span> <span class="cn">NULL</span>){</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                  btfl_ts <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">data.table</span>(data)[, site_id <span class="sc">:</span><span class="er">=</span> <span class="fu">paste0</span>(<span class="st">"site_"</span>,sim.id)]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(yearKeep)){</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                        btfl_ts <span class="ot">&lt;-</span> btfl_ts[years <span class="sc">%in%</span> yearKeep, ]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                  }</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                  btfl_ts[ , date <span class="sc">:</span><span class="er">=</span> <span class="fu">as.Date</span>(doy, <span class="at">origin =</span> <span class="fu">paste0</span>(years, <span class="st">"-01-01"</span>))<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                  btfl_ts[ , week <span class="sc">:</span><span class="er">=</span> <span class="fu">isoweek</span>(date)]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                  btfl_ts[<span class="fu">month</span>(date) <span class="sc">!=</span> <span class="dv">1</span> <span class="sc">|</span> week <span class="sc">&lt;</span> <span class="dv">50</span>, weekday <span class="sc">:</span><span class="er">=</span> <span class="fu">rowid</span>(week), by <span class="ot">=</span> .(site_id, years)]</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span>(<span class="fu">isTRUE</span>(weeklySample)){</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(weekdayKeep)){</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                              btfl_ts <span class="ot">&lt;-</span> btfl_ts[weekday <span class="sc">%in%</span> weekdayKeep, ]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                        btfl_ts <span class="ot">&lt;-</span> btfl_ts[btfl_ts[,.I[<span class="fu">sample</span>(.N, <span class="dv">1</span>)], by <span class="ot">=</span> .(week, site_id, years)][[<span class="st">"V1"</span>]],]</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                  }</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(monitoringSeason)){</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                  btfl_ts <span class="ot">&lt;-</span> btfl_ts[<span class="fu">month</span>(date) <span class="sc">%in%</span> monitoringSeason, ]</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                  }</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(btfl_ts)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can apply this function to retrieve a specific year of the simulated time series and add some new variables, leaving all other parameters empty. With the same function, we can also resample weekly counts (e.g.&nbsp;one day from c(2:5)) and restrict the time series to a specific monitoring season (e.g.&nbsp;c(4:9)).</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">13276</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2023</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>btfl_ts <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>btfl_fig1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_ts, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- daily visit"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y, </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weeklySample =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weekdayKeep =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">monitoringSeason =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>btfl_fig1</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell quarto-layout-panel" data-layout-ncol="1">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="butterfly_counts_files/figure-html/sampling_ploting_one_year-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>a)</figcaption>
 </figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="butterfly_counts_files/figure-html/sampling_ploting_one_year-2.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>b)</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <p>In the example above, the activity curve represented by the line has a Gaussian shape and counts presented by the points along the curve are independent random samples from a Poisson distribution. Because we sampled a count value for 365 days (day-of-year; doy), the counts are representative of the population of active adult butterflies as if the site was visited every. This implies that a proportion of butterflies are counted more than one day as their lifespan exceeds one day. On Pollard transect, this is how butterfly counts are likely to be counted and reported, but with a different frequency as visits are generally weekly, fortnightly, or even monthly. We can replicate this value by resampling the daily count weekly.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">13276</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weeklySample =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weekdayKeep =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">monitoringSeason =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>))</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="butterfly_counts_files/figure-html/time-sample-season-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>From the weekly visits, counts outside of the monitoring period will not be informed, in many cases these are ‘zeros’ as we expect the monitoring season to align with butterflies’ activity. Some other weeks might be missing from the time series, potentially due to unsuitable weather conditions for monitoring or recorder’s unavailability. We can include these missing visits by resampling a subset of the weekly counts.</p>
+<p>From the weekly visits, counts outside of the monitoring period will not be informed, in many cases these are ‘zeros’ as we expect the monitoring season to align with butterflies’ activity. Some other weeks might be missing from the time series, potentially due to unsuitable weather conditions for monitoring or the recorder’s availability. We can inform and exclude the missing visits by resampling a subset of the weekly counts.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -663,6 +901,11 @@ window.Quarto = {
 <p>In the first scenario, we will apply the method to a simple case where we have one univoltine species that is monitored over 15 years across 100 sites where the populations follow the same trend with a known growth rate.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-edwardsEstimatingButterflyPopulation2023" class="csl-entry" role="listitem">
+Edwards, Collin, Cheryl Schultz, David Sinclair, Daniel Marschalek, and Elizabeth Crone. 2023. <span>“Estimating Butterfly Population Trends from Sparse Monitoring Data Using <span>Generalized Additive Models</span>.”</span> December 8, 2023. <a href="https://doi.org/10.1101/2023.12.07.570644">https://doi.org/10.1101/2023.12.07.570644</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1093,6 +1336,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
