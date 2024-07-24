@@ -305,7 +305,7 @@ window.Quarto = {
 
 <section id="simulation-of-butterfly-counts" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-of-butterfly-counts">Simulation of Butterfly Counts</h2>
-<p>To demonstrate and assess the method used to compute butterfly abundance indices and the Grassland Butterfly Indicator which involves calculating collated abundance indices from multiple sites and estimating the population trend from a set of indicator species, the best option is to use simulated datasets that provide realistic data with known parameters. The simulation approach allows us to assess the methods’ performance and enables us to control individual parameters and conduct rigorous sensitivity analysis. This will provide useful insight into the method and enable rigorous assessment of its power and limitations.</p>
+<p>We will use simulated data to demonstrate and evaluate methods for calculating butterfly abundance indices, population trends and multi-species indicators such as the European Grassland Butterfly Indicator. To achieve this, we need to generate realistic data sets with known parameters. Data simulation will allow us to apply and test the methods on data generated under different scenarios. This approach will enable rigorous sensitivity analysis and provide crucial insights into the methods and a deeper understanding of their performance and limitations.</p>
 <div class="cell" data-messages="false">
 <details class="code-fold">
 <summary>Code</summary>
@@ -322,7 +322,9 @@ window.Quarto = {
 </div>
 <section id="simulation-tool-for-butterflies-and-other-phenologies" class="level3">
 <h3 class="anchored" data-anchor-id="simulation-tool-for-butterflies-and-other-phenologies">Simulation Tool for Butterflies and Other Phenologies</h3>
-<p>In the first case, we will simulate counts for one site for one year (e.g.&nbsp;2023), using a Gaussian curve to depict the shape of adult butterflies’ seasonal phenology (activity curve). We will use the function <code>timeseries_sim()</code> from the R package <code>butterflyGamSims</code> developed by Collin Edwards <span class="citation" data-cites="edwardsEstimatingButterflyPopulation2023">(see <a href="references.html#ref-edwardsEstimatingButterflyPopulation2023" role="doc-biblioref">Edwards et al. 2023</a>)</span>, available on <a href="https://github.com/cbedwards/butterflyGamSims/tree/main">GitHub</a>. This function will allow us to generate butterfly counts for one or multiple sites (iterations), using a specific shape, position (peak), period, sampling process and initial abundance. For multi-year time series, we can also define a growth rate (temporal trend).</p>
+<p>Because butterflies’ life cycle is strongly structured in time, with species-specific phenologies, we must account for this ecological process when simulating individual counts recorded across an entire season. The temporal pattern in the number of adult butterflies (imago) is determined by their emergence rate, the timing of the emergence and the life span of the adult. These parameters will often result in the number of adult individuals increasing over a certain period, up to a peak after when their number starts to decline. If a species can produce more than one generation per season, the number will display additional waves of emergence, each with its respective start, peak and decline periods. For each generation, the hump-shaped temporal pattern in the number of adults can often be described by a function that has a mean (center), variance (width) and a certain level of skewness (asymmetry). When merged, the individual patterns can become hidden under the pattern resulting from the cumulative effect of partly overlapping generations.</p>
+<p>To simulate butterfly count data with such phenological patterns, we will use the function <code>timeseries_sim()</code> from the R package <code>butterflyGamSims</code> developed by Collin Edwards <span class="citation" data-cites="edwardsEstimatingButterflyPopulation2023">(see <a href="references.html#ref-edwardsEstimatingButterflyPopulation2023" role="doc-biblioref">Edwards et al. 2023</a>)</span>. This package is freely available on <a href="https://github.com/cbedwards/butterflyGamSims/tree/main">GitHub</a> and will allow us to generate realistic data sets under scenarios with various levels of complexity.</p>
+<p>We illustrate how the <code>timeseries_sim()</code> function works with a simple case where we simulate butterfly counts for a univoltine species with a Gaussian pattern (i.e.&nbsp;one generation with Normal distribution), where the peak abundance is observed at day 175 with a standard deviation of 15 days.</p>
 <div class="cell" data-messages="false">
 <details class="code-fold">
 <summary>Code</summary>
@@ -343,7 +345,20 @@ window.Quarto = {
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>               )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The object produced by the <code>timeseries_sim()</code> function contains 1) a <code>data.frame</code> NAME$timeseries with the time series and 2) a <code>data.frame</code> NAME$parms with the parameters used for the simulation. In the parameters, you will find the population growth rate (<code>growth.rate</code>), the initial population size (<code>init. size</code>) measure in number of individuals expected over the season, the peak of the activity curve (<code>act.mean</code>) measured in days and the width of the activity curve (<code>act.sd</code>) that is measured in standard deviation. Note that not all sampling parameters used for the simulation are included in the parms object; the <code>activity.type</code> (the distribution function used to define the activity curve), the <code>sample.type</code> (the sampling process used to sample random counts along the activity curve) and the <code>abund.type</code> (the type of the growth rate, deterministic or with a log-normal process error) are missing.</p>
+<p>The object produced by the <code>timeseries_sim()</code> function contains 1) a <code>data.frame</code> NAME$timeseries with the time series and 2) a <code>data.frame</code> NAME$parms with the parameters used for the simulation. In the parameters, you will find the population growth rate (<code>growth.rate</code>), the initial population size (<code>init. size</code>) measure in number of individuals expected over the season, the peak of the activity curve (<code>act.mean</code>) measured in days and the width of the activity curve (<code>act.sd</code>) that is measured in standard deviation.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that not all sampling parameters used for the simulation are included in the parms object; the <code>activity.type</code> (the distribution function used to define the activity curve), the <code>sample.type</code> (the sampling process used to sample random counts along the activity curve) and the <code>abund.type</code> (the type of the growth rate, deterministic or with a log-normal process error) are missing.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="simulate-data-sampling-process" class="level2">
@@ -352,9 +367,9 @@ window.Quarto = {
 <p><span class="math display">\[
 \lambda_j = abundance * \frac{1}{\alpha \sqrt{2 \pi}} \exp \left(- \frac{1}{2} \left( \frac{\left(j - \mu\right)}{\alpha}\right)^2\right)
 \]</span></p>
-<p>From the activity curve, we can use the <code>rpois()</code> function in R to draw a random value from a Poisson distribution, representing the count of events for day <span class="math inline">\(j\)</span>, where <span class="math inline">\(n = 1\)</span> and the mean is specified by expected value <span class="math inline">\(\lambda\)</span> at day <span class="math inline">\(j\)</span>.</p>
+<p>From the activity curve, we can use the <code>rpois()</code> function in R to draw a random value from a Poisson distribution, <span class="math inline">\(y_i\)</span> representing the count for day <span class="math inline">\(j\)</span>, where the mean is specified by expected value <span class="math inline">\(\lambda\)</span> at day <span class="math inline">\(j\)</span>.</p>
 <p><span class="math display">\[
-y_j = rpois(n, \lambda_j)
+y_j = rpois(\lambda_j)
 \]</span></p>
 <p>From this simulation, we have generated the ecological process for the butterfly counts, for a given abundance distributed over a specific phenology defined by a Gaussian curve with a peak (mean) and a breath (standard deviation).</p>
 <div class="cell">
@@ -700,7 +715,7 @@ y_j = rpois(n, \lambda_j)
 </section>
 <section id="generalized-additive-models-with-rbms" class="level2">
 <h2 class="anchored" data-anchor-id="generalized-additive-models-with-rbms">Generalized Additive Models with rbms</h2>
-<p>We will use the simulation to test the GAM method implemented in the <a href="https://retoschmucki.github.io/rbms/index.html">R package rbms</a>. Because recorders only report the number of observed butterflies, zeros are generally not reported but can be derived from the visit dates.</p>
+<p>We will use the simulation to test the GAM method implemented in the <a href="https://retoschmucki.github.io/rbms/index.html">R package rbms</a> <span class="citation" data-cites="schmuckirbms2022">(<a href="references.html#ref-schmuckirbms2022" role="doc-biblioref">Schmucki, Harrower A., and Dennis B. 2022</a>)</span>. Because recorders only report the number of observed butterflies, zeros are generally not reported but can be derived from the visit dates.</p>
 <section id="organising-bms-count-data" class="level3">
 <h3 class="anchored" data-anchor-id="organising-bms-count-data">Organising BMS count data</h3>
 <div class="cell" data-messages="false">
@@ -904,6 +919,9 @@ y_j = rpois(n, \lambda_j)
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-edwardsEstimatingButterflyPopulation2023" class="csl-entry" role="listitem">
 Edwards, Collin, Cheryl Schultz, David Sinclair, Daniel Marschalek, and Elizabeth Crone. 2023. <span>“Estimating Butterfly Population Trends from Sparse Monitoring Data Using <span>Generalized Additive Models</span>.”</span> December 8, 2023. <a href="https://doi.org/10.1101/2023.12.07.570644">https://doi.org/10.1101/2023.12.07.570644</a>.
+</div>
+<div id="ref-schmuckirbms2022" class="csl-entry" role="listitem">
+Schmucki, Reto, Colin Harrower A., and Emily Dennis B. 2022. <span>“<span class="nocase">rbms: Computing generalised abundance indices for butterfly monitoring count data</span>.”</span> <a href="https://github.com/RetoSchmucki/rbms">https://github.com/RetoSchmucki/rbms</a>.
 </div>
 </div>
 </section>
