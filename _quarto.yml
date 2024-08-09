@@ -63,3 +63,8 @@ format:
     linkcolor: '#008b8b'
     code-block-bg: '#F5F5F2'
     code-block-border-left: true
+    geometry:
+      - top=30mm
+      - left=25mm
+      - right=20mm
+      - heightrounded

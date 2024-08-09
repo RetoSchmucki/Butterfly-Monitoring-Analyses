@@ -105,7 +105,8 @@ plot(unique(trend_sim[, .(years, log(y_count))]), pch = 19, col = "darkcyan",
       ylab = "Butterfly abundance (log)", xlab = "Year")
 
 for(i in 1:100){
-    abline(lm(log(y_count) ~ years, data = trend_sim[site_id == paste0("site_id", i), .(years, y_count)]),  col = 'orange')
+    abline(lm(log(y_count) ~ years, data = trend_sim[site_id == paste0("site_id", i), .(years, y_count)]),  
+            col = 'orange')
 }
 
 ```
@@ -123,18 +124,24 @@ plot(unique(trend_sim[, .(years, log(y_count))]), pch = 19, col = "darkcyan",
       ylab = "Butterfly abundance (log)", xlab = "Year")
 
 for(i in 1:100){
-    abline(lm(log(y_count) ~ years, data = trend_sim[site_id == paste0("site_id", i), .(years, y_count)]),  col = 'orange')
+    abline(lm(log(y_count) ~ years, data = trend_sim[site_id == paste0("site_id", i), .(years, y_count)]),  
+            col = 'orange')
 }
 
 for(i in seq_len(100)){
 
 boot_site <- sample(unique(trend_sim$site_id), trend_sim[, uniqueN(site_id)], replace = TRUE)
 
-#points(c(2010:2020), as.numeric(coef(glm(y_count~ factor(years) - 1, data = trend_sim[site_id %in% boot_site, ], family = "poisson"))), col = 'magenta', pch = 19)
-abline(lm(as.numeric(coef(glm(y_count~ factor(years) - 1, data = trend_sim[site_id %in% boot_site, ], family = "poisson"))) ~ c(2010:2020)), col = 'cadetblue', type = 'l')
+#points(c(2010:2020), as.numeric(coef(glm(y_count~ factor(years) - 1, data = trend_sim[site_id %in% boot_site, ],
+#                                           family = "poisson"))), col = 'magenta', pch = 19)
+
+abline(lm(as.numeric(coef(glm(y_count~ factor(years) - 1, data = trend_sim[site_id %in% boot_site, ], 
+                              family = "poisson"))) ~ c(2010:2020)), col = 'cadetblue', type = 'l')
 }
 
-points(c(2010:2020), as.numeric(coef(glm(y_count~ factor(years) - 1, data = trend_sim, family = "poisson"))), col = 'magenta', pch = 19)
-points(c(2010:2020), as.numeric(coef(glm(y_count~ factor(years) - 1, data = trend_sim, family = "poisson"))), col = 'magenta', type = 'l')
+points(c(2010:2020), as.numeric(coef(glm(y_count~ factor(years) - 1, data = trend_sim, family = "poisson"))), 
+      col = 'magenta', pch = 19)
+points(c(2010:2020), as.numeric(coef(glm(y_count~ factor(years) - 1, data = trend_sim, family = "poisson"))), 
+      col = 'magenta', type = 'l')
 
 ```
