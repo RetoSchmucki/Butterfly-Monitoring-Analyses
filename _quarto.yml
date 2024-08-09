@@ -32,14 +32,17 @@ book:
     - index.qmd
     - part: "Counting Butterflies"
       chapters: 
-      -  Butterfly_monitoring.qmd 
-    - part: "From Counts to FLight Curves"
+      -  Chapters/CountingButterflies/Butterfly_monitoring.qmd 
+    - part: "From Counts to Flight Curves"
       chapters:
-      - data_analyses_methods.qmd
-      - butterfly_counts.qmd
+      - Chapters/FromCountsToFlightCurves/data_analyses_methods.qmd
+      - Chapters/FromCountsToFlightCurves/butterfly_counts.qmd
+    - part: "Butterfly Trends"
+      chapters:
+      - Chapters/FromCountsToFlightCurves/trend_simulation.qmd
     - part: "Bibliography"
       chapters:
-      - references.qmd
+      - Chapters/Bibliography/references.qmd
   
 bibliography: references.bib
 highlight-style: pygments
