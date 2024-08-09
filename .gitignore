@@ -1,3 +1,4 @@
 .quarto
 /.quarto/
 /_book/
+/.docs/*
