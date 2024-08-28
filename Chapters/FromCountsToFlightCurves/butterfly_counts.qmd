@@ -134,6 +134,7 @@ set.seed(13276)
 y <- c(2023)
 
 btfl_ts <- sim2bms(data = btfl_data$timeseries, yearKeep = y)
+
 btfl_fig1 <- ggplot() +
                 geom_point(data=btfl_ts, aes(x=doy, y=count, colour = "count")) + 
                 geom_line(data = btfl_ts,

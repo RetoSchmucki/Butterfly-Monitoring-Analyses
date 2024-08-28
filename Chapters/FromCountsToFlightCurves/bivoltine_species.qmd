@@ -1,0 +1,137 @@
+# Bivoltine species {.unnumbered}
+
+Some butterfly species produce more than one generation per year. This mean that the populations will produce successive generations within the monitoring season. This phenomenon will be reflected in the adult count, resulting in bimodal distributions when the two generations are sufficently spaced in time and that the overlap of the flight curve of the different cohort is not to large.
+
+We can simulate bivoltine counts by simply overlapping two generation simulated independently, each with their specific parameters.
+
+```{R}
+#| label: bivoltine
+#| results: hide
+#| messages: false
+#| warning: false
+R
+set.seed(13276)
+
+if(!require("butterflyGamSims")) devtools::install_github("cbedwards/butterflyGamSims")
+library(butterflyGamSims)
+library(data.table)
+library(ggplot2)
+
+flc_col <- '#ff8c00'
+cnt_col <- '#008b8b'
+missing_col <- '#8b0000'
+GAM_col <- '#483d8b'
+
+btfl_data1 <- timeseries_sim(nsims=1,
+               year = c(2023),
+               doy.samples = seq(from=1, to=365, by=1),
+               abund.type = "exp",
+               activity.type = "gauss",
+               sample.type = "pois",
+               sim.parms = list(growth.rate = 0,
+                                init.size = 500, 
+                                act.mean = 155,
+                                act.sd = 10)
+               )
+
+btfl_data2 <- timeseries_sim(nsims=1,
+               year = c(2023),
+               doy.samples = seq(from=1, to=365, by=1),
+               abund.type = "exp",
+               activity.type = "gauss",
+               sample.type = "pois",
+               sim.parms = list(growth.rate = 0,
+                                init.size = 250, 
+                                act.mean = 230,
+                                act.sd = 10)
+               )
+
+btfl_data_b2 <- rbind(btfl_data1$timeseries[,c("years", "doy", "count", "act", "sim.id")], 
+                      btfl_data2$timeseries[,c("years", "doy", "count", "act", "sim.id")])
+btfl_data_b2 <- unique(data.table(btfl_data_b2)[, ":="(count=sum(count), act=sum(act)), by = .(years, doy)])
+
+y <- c(2023)
+btfl_ts <- sim2bms(data = btfl_data_b2, yearKeep = y)
+
+btfl_fig1 <- ggplot() +
+                geom_point(data=btfl_ts, aes(x=doy, y=count, colour = "count")) + 
+                geom_line(data = btfl_ts,
+                aes(x = doy, y = act, colour = "activity")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_ts$act)) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity"),
+                      values = c(cnt_col, flc_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = paste0("Simulated butterfly counts (", y,")"),
+                     subtitle = "- daily visit",
+                     x = "Day of Year",
+                     y = "Count")
+
+btfl_week_smpl <- sim2bms(data = btfl_data_b2, yearKeep = y, 
+                  weeklySample = TRUE,
+                  weekdayKeep = c(2:5),
+                  monitoringSeason = c(4:9))
+
+btfl_fig2 <- ggplot() +
+                geom_point(data=btfl_week_smpl, aes(x=doy, y=count, colour = "count")) + 
+                geom_line(data = btfl_ts,
+                aes(x = doy, y = act, colour = "activity")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_ts$act)) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity"),
+                      values = c(cnt_col, flc_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = paste0("Simulated butterfly counts (", y,")"),
+                     subtitle = "- weekly visit (random resampled)",
+                     x = "Day of Year",
+                     y = "Count")
+
+btfl_fig1
+btfl_fig2
+
+missing_prob <- function(data, mu=NULL, alpha = 5, theta = 0.3){
+                              x_ <- seq_len(nrow(data))
+                              mu_ <- ifelse(is.null(mu), length(x_) / 2, mu)
+                              std_ <- sqrt(mu_ / theta)
+                              y_ <- abs((alpha * exp((-(x_ - mu_)^2) / std_^2)) - alpha) + alpha
+                              yn_ <- y_ / (sum(y_))
+                        return(yn_)
+                  }
+
+sample_missing <- function(data, propMissing = 0.25){
+            
+            missing.prob <- data.table::data.table()
+            for(i in data[, unique(years)]){
+                  for(j in data[, unique(site_id)]){
+                  missing.prob <- rbind(missing.prob, missing_prob(data[years == i & site_id == j, ]))
+                  }
+            }
+            
+            missing.week <- data[sample(seq_len(.N), round(propMissing * .N), prob = unlist(missing.prob)), ]  
+      
+      return(missing.week)
+}
+
+btfl_week_missing <- sample_missing(data = btfl_week_smpl, propMissing = 0.25)
+
+btfl_fig3 <- ggplot() +
+                geom_point(data=btfl_week_smpl, aes(x=doy, y=count, colour = "count")) + 
+                geom_point(data=btfl_week_missing, aes(x=doy, y=count, colour = "missing"), 
+                            shape=4, size=2, stroke=2) + 
+                geom_line(data = btfl_ts,
+                aes(x = doy, y = act, colour = "activity")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_ts$act)) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity", "missing"),
+                      values = c(cnt_col, flc_col, missing_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = paste0("Simulated butterfly counts (", y,")"),
+                     subtitle = "- weekly visit (random resampled)",
+                     x = "Day of Year",
+                     y = "Count")
+btfl_fig3
+
+```

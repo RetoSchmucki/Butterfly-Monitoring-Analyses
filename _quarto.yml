@@ -37,6 +37,7 @@ book:
       chapters:
       - Chapters/FromCountsToFlightCurves/data_analyses_methods.qmd
       - Chapters/FromCountsToFlightCurves/butterfly_counts.qmd
+      - Chapters/FromCountsToFlightCurves/bivoltine_species.qmd
     - part: "Butterfly Trends"
       chapters:
       - Chapters/FromCountsToFlightCurves/trend_simulation.qmd
