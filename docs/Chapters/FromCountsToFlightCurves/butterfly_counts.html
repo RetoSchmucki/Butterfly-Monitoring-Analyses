@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.55">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -84,7 +84,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../Chapters/FromCountsToFlightCurves/trend_simulation.html" rel="next">
+<link href="../../Chapters/FromCountsToFlightCurves/bivoltine_species.html" rel="next">
 <link href="../../Chapters/FromCountsToFlightCurves/data_analyses_methods.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -235,6 +235,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../Chapters/FromCountsToFlightCurves/butterfly_counts.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Butterfly Counts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Chapters/FromCountsToFlightCurves/bivoltine_species.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bivoltine species</span></a>
   </div>
 </li>
       </ul>
@@ -614,42 +620,43 @@ y_j = rpois(\lambda_j)
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2023</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>btfl_ts <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>btfl_fig1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_ts, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- daily visit"</span>,</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y, </span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weeklySample =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weekdayKeep =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">monitoringSeason =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>))</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>btfl_fig1</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>btfl_fig1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_ts, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- daily visit"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data<span class="sc">$</span>timeseries, <span class="at">yearKeep =</span> y, </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weeklySample =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weekdayKeep =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">monitoringSeason =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>))</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>btfl_fig1</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell quarto-layout-panel" data-layout-ncol="1">
 <div class="quarto-layout-row">
@@ -1371,8 +1378,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../Chapters/FromCountsToFlightCurves/trend_simulation.html" class="pagination-link" aria-label="Trends Simulation">
-        <span class="nav-page-text">Trends Simulation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../Chapters/FromCountsToFlightCurves/bivoltine_species.html" class="pagination-link" aria-label="Bivoltine species">
+        <span class="nav-page-text">Bivoltine species</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
