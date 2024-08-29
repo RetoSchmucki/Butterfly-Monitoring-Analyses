@@ -258,6 +258,24 @@ The mixture model converged and indicate that the first generation is `r mod1$pi
 These results compare nicely with the parameters used in our simulation where the first generation had 500 individual, with a peak at day 155 and a standard deviation of 10, and the second generation had 250 individuals with a peak at day 230 and a standard deviation of 10.
 
 ## Overlapping generations
+```{R}
+#| label: bivoltine2
+#| results: hide
+#| messages: false
+#| warning: false
+
+set.seed(13276)
+
+if(!require("butterflyGamSims")) devtools::install_github("cbedwards/butterflyGamSims")
+library(butterflyGamSims)
+library(data.table)
+library(ggplot2)
+
+flc_col <- '#ff8c00'
+cnt_col <- '#008b8b'
+missing_col <- '#8b0000'
+GAM_col <- '#483d8b'
+
 
 btfl_data1 <- timeseries_sim(nsims=1,
                year = c(2023),
@@ -400,7 +418,7 @@ btfl_fig3
 Fitting the annual flith curve.
 
 ```{R}
-#| label: bivoltine_flightcurve
+#| label: bivoltine_flightcurve2
 #| results: hide
 #| messages: false
 #| warning: false
@@ -476,7 +494,7 @@ We can see that the GAM fitted a cummulative fligth curve (e.i., the two generat
 
 
 ```{R}
-#| label: mixture_distribution
+#| label: mixture_distribution2
 
 library(mixR)
 
