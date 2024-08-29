@@ -9,7 +9,7 @@ We can simulate bivoltine counts by simply overlapping two generation simulated 
 #| results: hide
 #| messages: false
 #| warning: false
-R
+
 set.seed(13276)
 
 if(!require("butterflyGamSims")) devtools::install_github("cbedwards/butterflyGamSims")
@@ -49,6 +49,30 @@ btfl_data2 <- timeseries_sim(nsims=1,
 btfl_data_b2 <- rbind(btfl_data1$timeseries[,c("years", "doy", "count", "act", "sim.id")], 
                       btfl_data2$timeseries[,c("years", "doy", "count", "act", "sim.id")])
 btfl_data_b2 <- unique(data.table(btfl_data_b2)[, ":="(count=sum(count), act=sum(act)), by = .(years, doy)])
+btfl_data_b2[, abund.true:=sum(unique(c(btfl_data1$timeseries$abund.true, btfl_data2$timeseries$abund.true)))]
+
+
+
+sim2bms <- function(data, yearKeep = NULL, weeklySample = FALSE, weekdayKeep = NULL, monitoringSeason = NULL){
+                  
+                  btfl_ts <- data.table::data.table(data)[, site_id := paste0("site_",sim.id)]
+                  if(!is.null(yearKeep)){
+                        btfl_ts <- btfl_ts[years %in% yearKeep, ]
+                  }
+                  btfl_ts[ , date := as.Date(doy, origin = paste0(years, "-01-01"))-1]
+                  btfl_ts[ , week := isoweek(date)]
+                  btfl_ts[month(date) != 1 | week < 50, weekday := rowid(week), by = .(site_id, years)]
+                  if(isTRUE(weeklySample)){
+                        if(!is.null(weekdayKeep)){
+                              btfl_ts <- btfl_ts[weekday %in% weekdayKeep, ]
+                        }
+                        btfl_ts <- btfl_ts[btfl_ts[,.I[sample(.N, 1)], by = .(week, site_id, years)][["V1"]],]
+                  }
+                  if(!is.null(monitoringSeason)){
+                  btfl_ts <- btfl_ts[month(date) %in% monitoringSeason, ]
+                  }
+            return(btfl_ts)
+            }
 
 y <- c(2023)
 btfl_ts <- sim2bms(data = btfl_data_b2, yearKeep = y)
@@ -135,3 +159,335 @@ btfl_fig3 <- ggplot() +
 btfl_fig3
 
 ```
+
+From the weekly counts recorded for the bivoltine species, we can use the rbms package to fit an Generalized Additive Model (GAM) to the data to retrieve the overall shape of the annual flith curve. Here only from one site, but this could obviously be extended and more powerfull if we had more than one site monitored within a region.
+
+```{R}
+#| label: bivoltine_flightcurve
+#| results: hide
+#| messages: false
+#| warning: false
+
+library(rbms)
+
+visit_sim <- btfl_week_smpl[!date %in% btfl_week_missing$date, .(site_id, date, count)]
+count_sim <- visit_sim[count>=1,][, species := "sp1"]
+
+names(visit_sim) <- toupper(names(visit_sim))
+names(count_sim) <- toupper(names(count_sim))
+
+ts_date <- rbms::ts_dwmy_table(InitYear = 2023, LastYear = 2023, WeekDay1 = 'monday')
+
+ts_season <- rbms::ts_monit_season(ts_date,
+                       StartMonth = 4,
+                       EndMonth = 9, 
+                       StartDay = 1,
+                       EndDay = NULL,
+                       CompltSeason = TRUE,
+                       Anchor = TRUE,
+                       AnchorLength = 2,
+                       AnchorLag = 2,
+                       TimeUnit = 'd')
+
+ts_season_visit <- rbms::ts_monit_site(ts_season, visit_sim)
+
+ts_season_count <- rbms::ts_monit_count_site(ts_season_visit, count_sim, sp = "sp1")
+
+### Fitting a GAM to Butterfly Counts
+
+ts_flight_curve <- rbms::flight_curve(ts_season_count, 
+                       NbrSample = 300,
+                       MinVisit = 5,
+                       MinOccur = 3,
+                       MinNbrSite = 1,
+                       MaxTrial = 4,
+                       GamFamily = 'nb',
+                       SpeedGam = FALSE,
+                       CompltSeason = TRUE,
+                       SelectYear = NULL,
+                       TimeUnit = 'd')
+
+
+## plot-fitted-flight-curve
+
+pheno <- ts_flight_curve$pheno
+
+btfl_fig4 <- ggplot() +
+                geom_point(data=ts_season_count[ANCHOR == 0 & !is.na(COUNT), ], aes(x=DAY_SINCE, y=COUNT, colour = "count")) +
+                geom_point(data=btfl_week_missing, aes(x=doy, y=count, colour = "missing"), 
+                            shape=4, size=2, stroke=2) + 
+                geom_line(data = btfl_ts, aes(x = doy, y = act, colour = "activity")) +
+                geom_line(data = pheno,
+                    aes(x = trimDAYNO, y = btfl_ts[, unique(abund.true)]*NM, colour = "GAM_fit")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$act, 
+                                          pheno$NM*btfl_ts[,unique(abund.true)], 
+                                          btfl_week_missing$count, 
+                                          ts_season_count[!is.na(COUNT), COUNT] )) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity", "missing", "GAM_fit"),
+                      values = c(cnt_col, flc_col, missing_col, GAM_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = paste0("Simulated butterfly counts (", y,")"),
+                     subtitle = "- Fitting GAM model with rbms",
+                     x = "Day of Year",
+                     y = "Count")
+btfl_fig4
+```
+
+We can see that the GAM fitted very well the cummulative fligth curve (e.i., the two generations activity curves). However, the GAM does not distinguish the different generations and only return the overall shape resulting from all observation. We can try to retrieve the generation by fitting a mixture of k components (generations) defined by a Gaussian distribution. This can be done with the Rmix package in R.
+
+
+```{R}
+#| label: mixture_distribution
+
+library(mixR)
+
+set.seed(102)
+btnbr <- pheno$NM*btfl_ts[,unique(abund.true)]
+x1 <- rep(1:365, round(btnbr))
+# fit a Normal mixture model (unequal variances)
+mod1 = mixfit(x1, ncomp = 2); mod1
+plot(mod1, title = 'Normal Mixture Model (unequal variances)')
+
+mod1
+```
+
+The mixture model converged and indicate that the first generation is `r mod1$pi[1]` percent and the second `r mod1$pi[2]` percent, in other words, generation one has `r mod1$pi[1]/mod1$pi[2]` the number of individuals of generation two. The peak of the first generation is located at day `r mod1$mu[1]` and the second at day `r mod1$mu[2]`, with standard deviation of `r mod1$sd[1]` and `r mod1$sd[2]` respectively.
+
+These results compare nicely with the parameters used in our simulation where the first generation had 500 individual, with a peak at day 155 and a standard deviation of 10, and the second generation had 250 individuals with a peak at day 230 and a standard deviation of 10.
+
+## Overlapping generations
+
+btfl_data1 <- timeseries_sim(nsims=1,
+               year = c(2023),
+               doy.samples = seq(from=1, to=365, by=1),
+               abund.type = "exp",
+               activity.type = "gauss",
+               sample.type = "pois",
+               sim.parms = list(growth.rate = 0,
+                                init.size = 500, 
+                                act.mean = 175,
+                                act.sd = 15)
+               )
+
+btfl_data2 <- timeseries_sim(nsims=1,
+               year = c(2023),
+               doy.samples = seq(from=1, to=365, by=1),
+               abund.type = "exp",
+               activity.type = "gauss",
+               sample.type = "pois",
+               sim.parms = list(growth.rate = 0,
+                                init.size = 250, 
+                                act.mean = 225,
+                                act.sd = 15)
+               )
+
+btfl_data_b2 <- rbind(btfl_data1$timeseries[,c("years", "doy", "count", "act", "sim.id")], 
+                      btfl_data2$timeseries[,c("years", "doy", "count", "act", "sim.id")])
+btfl_data_b2 <- unique(data.table(btfl_data_b2)[, ":="(count=sum(count), act=sum(act)), by = .(years, doy)])
+btfl_data_b2[, abund.true:=sum(unique(c(btfl_data1$timeseries$abund.true, btfl_data2$timeseries$abund.true)))]
+
+
+
+sim2bms <- function(data, yearKeep = NULL, weeklySample = FALSE, weekdayKeep = NULL, monitoringSeason = NULL){
+                  
+                  btfl_ts <- data.table::data.table(data)[, site_id := paste0("site_",sim.id)]
+                  if(!is.null(yearKeep)){
+                        btfl_ts <- btfl_ts[years %in% yearKeep, ]
+                  }
+                  btfl_ts[ , date := as.Date(doy, origin = paste0(years, "-01-01"))-1]
+                  btfl_ts[ , week := isoweek(date)]
+                  btfl_ts[month(date) != 1 | week < 50, weekday := rowid(week), by = .(site_id, years)]
+                  if(isTRUE(weeklySample)){
+                        if(!is.null(weekdayKeep)){
+                              btfl_ts <- btfl_ts[weekday %in% weekdayKeep, ]
+                        }
+                        btfl_ts <- btfl_ts[btfl_ts[,.I[sample(.N, 1)], by = .(week, site_id, years)][["V1"]],]
+                  }
+                  if(!is.null(monitoringSeason)){
+                  btfl_ts <- btfl_ts[month(date) %in% monitoringSeason, ]
+                  }
+            return(btfl_ts)
+            }
+
+y <- c(2023)
+btfl_ts <- sim2bms(data = btfl_data_b2, yearKeep = y)
+
+btfl_fig1 <- ggplot() +
+                geom_point(data=btfl_ts, aes(x=doy, y=count, colour = "count")) + 
+                geom_line(data = btfl_ts,
+                aes(x = doy, y = act, colour = "activity")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_ts$act)) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity"),
+                      values = c(cnt_col, flc_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = paste0("Simulated butterfly counts (", y,")"),
+                     subtitle = "- daily visit",
+                     x = "Day of Year",
+                     y = "Count")
+
+btfl_week_smpl <- sim2bms(data = btfl_data_b2, yearKeep = y, 
+                  weeklySample = TRUE,
+                  weekdayKeep = c(2:5),
+                  monitoringSeason = c(4:9))
+
+btfl_fig2 <- ggplot() +
+                geom_point(data=btfl_week_smpl, aes(x=doy, y=count, colour = "count")) + 
+                geom_line(data = btfl_ts,
+                aes(x = doy, y = act, colour = "activity")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_ts$act)) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity"),
+                      values = c(cnt_col, flc_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = paste0("Simulated butterfly counts (", y,")"),
+                     subtitle = "- weekly visit (random resampled)",
+                     x = "Day of Year",
+                     y = "Count")
+
+btfl_fig1
+btfl_fig2
+
+missing_prob <- function(data, mu=NULL, alpha = 5, theta = 0.3){
+                              x_ <- seq_len(nrow(data))
+                              mu_ <- ifelse(is.null(mu), length(x_) / 2, mu)
+                              std_ <- sqrt(mu_ / theta)
+                              y_ <- abs((alpha * exp((-(x_ - mu_)^2) / std_^2)) - alpha) + alpha
+                              yn_ <- y_ / (sum(y_))
+                        return(yn_)
+                  }
+
+sample_missing <- function(data, propMissing = 0.25){
+            
+            missing.prob <- data.table::data.table()
+            for(i in data[, unique(years)]){
+                  for(j in data[, unique(site_id)]){
+                  missing.prob <- rbind(missing.prob, missing_prob(data[years == i & site_id == j, ]))
+                  }
+            }
+            
+            missing.week <- data[sample(seq_len(.N), round(propMissing * .N), prob = unlist(missing.prob)), ]  
+      
+      return(missing.week)
+}
+
+btfl_week_missing <- sample_missing(data = btfl_week_smpl, propMissing = 0.25)
+
+btfl_fig3 <- ggplot() +
+                geom_point(data=btfl_week_smpl, aes(x=doy, y=count, colour = "count")) + 
+                geom_point(data=btfl_week_missing, aes(x=doy, y=count, colour = "missing"), 
+                            shape=4, size=2, stroke=2) + 
+                geom_line(data = btfl_ts,
+                aes(x = doy, y = act, colour = "activity")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$count, btfl_ts$act)) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity", "missing"),
+                      values = c(cnt_col, flc_col, missing_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = paste0("Simulated butterfly counts (", y,")"),
+                     subtitle = "- weekly visit (random resampled)",
+                     x = "Day of Year",
+                     y = "Count")
+btfl_fig3
+
+```
+
+Fitting the annual flith curve.
+
+```{R}
+#| label: bivoltine_flightcurve
+#| results: hide
+#| messages: false
+#| warning: false
+
+library(rbms)
+
+visit_sim <- btfl_week_smpl[!date %in% btfl_week_missing$date, .(site_id, date, count)]
+count_sim <- visit_sim[count>=1,][, species := "sp1"]
+
+names(visit_sim) <- toupper(names(visit_sim))
+names(count_sim) <- toupper(names(count_sim))
+
+ts_date <- rbms::ts_dwmy_table(InitYear = 2023, LastYear = 2023, WeekDay1 = 'monday')
+
+ts_season <- rbms::ts_monit_season(ts_date,
+                       StartMonth = 4,
+                       EndMonth = 9, 
+                       StartDay = 1,
+                       EndDay = NULL,
+                       CompltSeason = TRUE,
+                       Anchor = TRUE,
+                       AnchorLength = 2,
+                       AnchorLag = 2,
+                       TimeUnit = 'd')
+
+ts_season_visit <- rbms::ts_monit_site(ts_season, visit_sim)
+
+ts_season_count <- rbms::ts_monit_count_site(ts_season_visit, count_sim, sp = "sp1")
+
+### Fitting a GAM to Butterfly Counts
+
+ts_flight_curve <- rbms::flight_curve(ts_season_count, 
+                       NbrSample = 300,
+                       MinVisit = 5,
+                       MinOccur = 3,
+                       MinNbrSite = 1,
+                       MaxTrial = 4,
+                       GamFamily = 'nb',
+                       SpeedGam = FALSE,
+                       CompltSeason = TRUE,
+                       SelectYear = NULL,
+                       TimeUnit = 'd')
+
+
+## plot-fitted-flight-curve
+
+pheno <- ts_flight_curve$pheno
+
+btfl_fig4 <- ggplot() +
+                geom_point(data=ts_season_count[ANCHOR == 0 & !is.na(COUNT), ], aes(x=DAY_SINCE, y=COUNT, colour = "count")) +
+                geom_point(data=btfl_week_missing, aes(x=doy, y=count, colour = "missing"), 
+                            shape=4, size=2, stroke=2) + 
+                geom_line(data = btfl_ts, aes(x = doy, y = act, colour = "activity")) +
+                geom_line(data = pheno,
+                    aes(x = trimDAYNO, y = btfl_ts[, unique(abund.true)]*NM, colour = "GAM_fit")) +
+                xlim(1,365) + ylim(0, max(btfl_ts$act, 
+                                          pheno$NM*btfl_ts[,unique(abund.true)], 
+                                          btfl_week_missing$count, 
+                                          ts_season_count[!is.na(COUNT), COUNT] )) + 
+                scale_colour_manual("", 
+                      breaks = c("count", "activity", "missing", "GAM_fit"),
+                      values = c(cnt_col, flc_col, missing_col, GAM_col)) +
+                theme_light() + 
+                theme(legend.position = "inside", legend.position.inside = c(0.9, 0.8)) +
+                labs(title = paste0("Simulated butterfly counts (", y,")"),
+                     subtitle = "- Fitting GAM model with rbms",
+                     x = "Day of Year",
+                     y = "Count")
+btfl_fig4
+```
+
+We can see that the GAM fitted a cummulative fligth curve (e.i., the two generations activity curves) without distinguishing the two generations very well.  We can try to retrieve the generation by fitting a mixture of k components (generations) defined by a Gaussian distribution.
+
+
+```{R}
+#| label: mixture_distribution
+
+library(mixR)
+
+set.seed(102)
+btnbr <- pheno$NM*btfl_ts[,unique(abund.true)]
+x1 <- rep(1:365, round(btnbr))
+# fit a Normal mixture model (unequal variances)
+mod1 = mixfit(x1, ncomp = 2); mod1
+plot(mod1, title = 'Normal Mixture Model (unequal variances)')
+
+mod1
+```
+
+The mixture model converged and indicate that the first generation is `r mod1$pi[1]` percent and the second `r mod1$pi[2]` percent, in other words, generation one has `r mod1$pi[1]/mod1$pi[2]` the number of individuals of generation two. The peak of the first generation is located at day `r mod1$mu[1]` and the second at day `r mod1$mu[2]`, with standard deviation of `r mod1$sd[1]` and `r mod1$sd[2]` respectively.
