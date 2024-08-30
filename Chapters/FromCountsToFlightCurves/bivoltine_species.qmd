@@ -259,7 +259,7 @@ btfl_fig4
 
 ## Retrieve Generation Parameters
 
-The GAM fitted very well the cummulative fligth curve (e.i., two generations activity curves). While the GAM  returns the overall shape resulting from all observation the model does not distinguish the different generations.  We can however fit a mixture model with k components (generations) to estimate and retrieve the parameters of the different generations. Here we will simply try to fit two generation with parameter of a Gaussian distribution (mean and standard deviation). The [R package mixR](https://cran.r-project.org/web/packages/mixR/index.html) provides an efficient algorithm (C++) to fit and assess the goodness of fit of such model.
+The GAM fitted very well the cummulative fligth curve (e.i., two generations activity curves). While the GAM  returns the overall shape resulting from all observation the model does not distinguish the different generations.  We can however fit a mixture model with k components (generations) to estimate and retrieve the parameters of the different generations. Here we will simply try to fit two generation with parameter of a Gaussian distribution (mean and standard deviation). The [R package mixR](https://cran.r-project.org/web/packages/mixR/index.html) provides an efficient algorithm (C++) to fit and assess the goodness of fit of such model[@Yu2022] .
 
 ```{R}
 #| label: mixture_distribution

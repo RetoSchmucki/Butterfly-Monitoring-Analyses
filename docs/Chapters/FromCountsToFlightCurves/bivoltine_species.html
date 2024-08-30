@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -548,7 +568,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="retrieve-generation-parameters" class="level2">
 <h2 class="anchored" data-anchor-id="retrieve-generation-parameters">Retrieve Generation Parameters</h2>
-<p>The GAM fitted very well the cummulative fligth curve (e.i., two generations activity curves). While the GAM returns the overall shape resulting from all observation the model does not distinguish the different generations. We can however fit a mixture model with k components (generations) to estimate and retrieve the parameters of the different generations. Here we will simply try to fit two generation with parameter of a Gaussian distribution (mean and standard deviation). The <a href="https://cran.r-project.org/web/packages/mixR/index.html">R package mixR</a> provides an efficient algorithm (C++) to fit and assess the goodness of fit of such model.</p>
+<p>The GAM fitted very well the cummulative fligth curve (e.i., two generations activity curves). While the GAM returns the overall shape resulting from all observation the model does not distinguish the different generations. We can however fit a mixture model with k components (generations) to estimate and retrieve the parameters of the different generations. Here we will simply try to fit two generation with parameter of a Gaussian distribution (mean and standard deviation). The <a href="https://cran.r-project.org/web/packages/mixR/index.html">R package mixR</a> provides an efficient algorithm (C++) to fit and assess the goodness of fit of such model<span class="citation" data-cites="Yu2022">(<a href="../Bibliography/references.html#ref-Yu2022" role="doc-biblioref">Yu 2022</a>)</span> .</p>
 <div class="cell" data-messages="false">
 <details class="code-fold">
 <summary>Code</summary>
@@ -920,6 +940,11 @@ EM iterations: 141 AIC: 6920.48 BIC: 6943.54 log-likelihood: -3455.24</code></pr
 <p>The mixture model converged and indicate that the first generation is 0.7312038 percent and the second 0.2687962 percent, in other words, generation one has 2.7202908 the number of individuals of generation two. The peak of the first generation is located at day 177.1682929 and the second at day 224.9959818, with standard deviation of 16.3513803 and 17.0979745 respectively.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Yu2022" class="csl-entry" role="listitem">
+Yu, Youjiao. 2022. <span>“mixR: An r Package for Finite Mixture Modeling for Both Raw and Binned Data.”</span> <em>Journal of Open Source Software</em> 7 (69): 4031. <a href="https://doi.org/10.21105/joss.04031">https://doi.org/10.21105/joss.04031</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
