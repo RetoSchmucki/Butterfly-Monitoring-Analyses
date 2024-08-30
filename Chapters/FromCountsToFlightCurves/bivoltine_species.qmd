@@ -263,6 +263,8 @@ The GAM fitted very well the cummulative fligth curve (e.i., two generations act
 
 ```{R}
 #| label: mixture_distribution
+#| messages: false
+#| warning: false
 
 set.seed(102)
 btnbr <- pheno$NM*btfl_ts[,unique(abund.true)]
@@ -507,6 +509,8 @@ We can see that the GAM fitted a cummulative fligth curve (e.i., the two generat
 
 ```{R}
 #| label: mixture_distribution2
+#| messages: false
+#| warning: false
 
 set.seed(102)
 btnbr <- pheno$NM*btfl_ts[,unique(abund.true)]
