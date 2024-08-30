@@ -132,7 +132,7 @@ btfl_fig1 <- ggplot() +
                      subtitle = "- daily visit",
                      x = "Day of Year",
                      y = "Count")
-
+btfl_fig1
 ## ===========================
 ## degradation1: weekly count
 ## ===========================
@@ -157,6 +157,7 @@ btfl_fig2 <- ggplot() +
                      x = "Day of Year",
                      y = "Count")
 
+btfl_fig2
 ## ==============================
 ## degradation: add missing week
 ## ==============================
@@ -179,8 +180,7 @@ btfl_fig3 <- ggplot() +
                      subtitle = "- weekly visit (random resampled)",
                      x = "Day of Year",
                      y = "Count")
-btfl_fig1
-btfl_fig2
+
 btfl_fig3
 ```
 
@@ -280,9 +280,6 @@ gen_plot1 +
       geom_line(data = pheno, aes(x = trimDAYNO, y = NM, colour = "GAM_fit"), lwd = 1) +
       scale_colour_manual("", breaks =  "GAM_fit", values = GAM_col) 
 
-
-
-
 mod1
 ```
 
@@ -363,6 +360,8 @@ btfl_fig1 <- ggplot() +
                      x = "Day of Year",
                      y = "Count")
 
+btfl_fig1
+
 btfl_week_smpl <- sim2bms(data = btfl_data_b2, yearKeep = y, 
                   weeklySample = TRUE,
                   weekdayKeep = c(2:5),
@@ -383,31 +382,9 @@ btfl_fig2 <- ggplot() +
                      x = "Day of Year",
                      y = "Count")
 
-btfl_fig1
+
 btfl_fig2
 
-missing_prob <- function(data, mu=NULL, alpha = 5, theta = 0.3){
-                              x_ <- seq_len(nrow(data))
-                              mu_ <- ifelse(is.null(mu), length(x_) / 2, mu)
-                              std_ <- sqrt(mu_ / theta)
-                              y_ <- abs((alpha * exp((-(x_ - mu_)^2) / std_^2)) - alpha) + alpha
-                              yn_ <- y_ / (sum(y_))
-                        return(yn_)
-                  }
-
-sample_missing <- function(data, propMissing = 0.25){
-            
-            missing.prob <- data.table::data.table()
-            for(i in data[, unique(years)]){
-                  for(j in data[, unique(site_id)]){
-                  missing.prob <- rbind(missing.prob, missing_prob(data[years == i & site_id == j, ]))
-                  }
-            }
-            
-            missing.week <- data[sample(seq_len(.N), round(propMissing * .N), prob = unlist(missing.prob)), ]  
-      
-      return(missing.week)
-}
 
 btfl_week_missing <- sample_missing(data = btfl_week_smpl, propMissing = 0.25)
 
@@ -475,7 +452,6 @@ ts_flight_curve <- rbms::flight_curve(ts_season_count,
                        CompltSeason = TRUE,
                        SelectYear = NULL,
                        TimeUnit = 'd')
-
 
 ## plot-fitted-flight-curve
 
