@@ -269,7 +269,7 @@ btnbr <- pheno$NM*btfl_ts[,unique(abund.true)]
 x1 <- rep(1:365, round(btnbr))
 
 # fit a Normal mixture model (unequal variances)
-mod1 = mixfit(x1, ncomp = 2); mod1
+mod1 = mixfit(x1, ncomp = 2)
 gen_plot1 <- plot(mod1, title = 'Normal Mixture Model (unequal variances)')
 
 gen_plot1 +
@@ -512,7 +512,7 @@ set.seed(102)
 btnbr <- pheno$NM*btfl_ts[,unique(abund.true)]
 x1 <- rep(1:365, round(btnbr))
 # fit a Normal mixture model (unequal variances)
-mod1 = mixfit(x1, ncomp = 2); mod1
+mod1 = mixfit(x1, ncomp = 2)
 gen_plot2 <- plot(mod1, title = 'Normal Mixture Model (unequal variances)')
 
 gen_plot2 +
