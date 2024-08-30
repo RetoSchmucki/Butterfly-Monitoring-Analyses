@@ -391,54 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- daily visit"</span>,</span>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="do">## ===========================</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="do">## degradation1: weekly count</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="do">## ===========================</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data_b2, <span class="at">yearKeep =</span> y, </span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weeklySample =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weekdayKeep =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>                  <span class="at">monitoringSeason =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>))</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="do">## ==============================</span></span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="do">## degradation: add missing week</span></span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="do">## ==============================</span></span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>btfl_week_missing <span class="ot">&lt;-</span> <span class="fu">sample_missing</span>(<span class="at">data =</span> btfl_week_smpl, <span class="at">propMissing =</span> <span class="fl">0.25</span>)</span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>btfl_fig3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_missing, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"missing"</span>), </span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shape=</span><span class="dv">4</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">stroke=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>, <span class="st">"missing"</span>),</span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col, missing_col)) <span class="sc">+</span></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>btfl_fig1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>btfl_fig1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -449,7 +402,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ===========================</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">## degradation1: weekly count</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ===========================</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data_b2, <span class="at">yearKeep =</span> y, </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weeklySample =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weekdayKeep =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">monitoringSeason =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -460,7 +437,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>btfl_fig3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ==============================</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## degradation: add missing week</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ==============================</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>btfl_week_missing <span class="ot">&lt;-</span> <span class="fu">sample_missing</span>(<span class="at">data =</span> btfl_week_smpl, <span class="at">propMissing =</span> <span class="fl">0.25</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>btfl_fig3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_missing, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"missing"</span>), </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shape=</span><span class="dv">4</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">stroke=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>, <span class="st">"missing"</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col, missing_col)) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>btfl_fig3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -692,27 +692,7 @@ EM iterations: 7 AIC: 6756.14 BIC: 6779.26 log-likelihood: -3373.07</code></pre>
 <span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
 <span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
 <span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data_b2, <span class="at">yearKeep =</span> y, </span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weeklySample =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weekdayKeep =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>                  <span class="at">monitoringSeason =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>))</span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>btfl_fig1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>btfl_fig1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -723,7 +703,28 @@ EM iterations: 7 AIC: 6756.14 BIC: 6779.26 log-likelihood: -3373.07</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>btfl_week_smpl <span class="ot">&lt;-</span> <span class="fu">sim2bms</span>(<span class="at">data =</span> btfl_data_b2, <span class="at">yearKeep =</span> y, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weeklySample =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weekdayKeep =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">monitoringSeason =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>btfl_fig2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col)) <span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>btfl_fig2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -734,48 +735,25 @@ EM iterations: 7 AIC: 6756.14 BIC: 6779.26 log-likelihood: -3373.07</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>missing_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">mu=</span><span class="cn">NULL</span>, <span class="at">alpha =</span> <span class="dv">5</span>, <span class="at">theta =</span> <span class="fl">0.3</span>){</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                              x_ <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(data))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                              mu_ <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.null</span>(mu), <span class="fu">length</span>(x_) <span class="sc">/</span> <span class="dv">2</span>, mu)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                              std_ <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mu_ <span class="sc">/</span> theta)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                              y_ <span class="ot">&lt;-</span> <span class="fu">abs</span>((alpha <span class="sc">*</span> <span class="fu">exp</span>((<span class="sc">-</span>(x_ <span class="sc">-</span> mu_)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> std_<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">-</span> alpha) <span class="sc">+</span> alpha</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                              yn_ <span class="ot">&lt;-</span> y_ <span class="sc">/</span> (<span class="fu">sum</span>(y_))</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">return</span>(yn_)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                  }</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>sample_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">propMissing =</span> <span class="fl">0.25</span>){</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>            missing.prob <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">data.table</span>()</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span>(i <span class="cf">in</span> data[, <span class="fu">unique</span>(years)]){</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">for</span>(j <span class="cf">in</span> data[, <span class="fu">unique</span>(site_id)]){</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                  missing.prob <span class="ot">&lt;-</span> <span class="fu">rbind</span>(missing.prob, <span class="fu">missing_prob</span>(data[years <span class="sc">==</span> i <span class="sc">&amp;</span> site_id <span class="sc">==</span> j, ]))</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                  }</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>            missing.week <span class="ot">&lt;-</span> data[<span class="fu">sample</span>(<span class="fu">seq_len</span>(.N), <span class="fu">round</span>(propMissing <span class="sc">*</span> .N), <span class="at">prob =</span> <span class="fu">unlist</span>(missing.prob)), ]  </span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(missing.week)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>btfl_week_missing <span class="ot">&lt;-</span> <span class="fu">sample_missing</span>(<span class="at">data =</span> btfl_week_smpl, <span class="at">propMissing =</span> <span class="fl">0.25</span>)</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>btfl_fig3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_missing, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"missing"</span>), </span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shape=</span><span class="dv">4</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">stroke=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>, <span class="st">"missing"</span>),</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col, missing_col)) <span class="sc">+</span></span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>btfl_fig3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>btfl_week_missing <span class="ot">&lt;-</span> <span class="fu">sample_missing</span>(<span class="at">data =</span> btfl_week_smpl, <span class="at">propMissing =</span> <span class="fl">0.25</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>btfl_fig3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_smpl, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_missing, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"missing"</span>), </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shape=</span><span class="dv">4</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">stroke=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>count, btfl_ts<span class="sc">$</span>act)) <span class="sc">+</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>, <span class="st">"missing"</span>),</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col, missing_col)) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- weekly visit (random resampled)"</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>btfl_fig3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -826,32 +804,31 @@ EM iterations: 7 AIC: 6756.14 BIC: 6779.26 log-likelihood: -3373.07</code></pre>
 <span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SelectYear =</span> <span class="cn">NULL</span>,</span>
 <span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>                       <span class="at">TimeUnit =</span> <span class="st">'d'</span>)</span>
 <span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="do">## plot-fitted-flight-curve</span></span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> ts_flight_curve<span class="sc">$</span>pheno</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>btfl_fig4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>ts_season_count[ANCHOR <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(COUNT), ], <span class="fu">aes</span>(<span class="at">x=</span>DAY_SINCE, <span class="at">y=</span>COUNT, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_missing, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"missing"</span>), </span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shape=</span><span class="dv">4</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">stroke=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts, <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> pheno,</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">aes</span>(<span class="at">x =</span> trimDAYNO, <span class="at">y =</span> btfl_ts[, <span class="fu">unique</span>(abund.true)]<span class="sc">*</span>NM, <span class="at">colour =</span> <span class="st">"GAM_fit"</span>)) <span class="sc">+</span></span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>act, </span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>                                          pheno<span class="sc">$</span>NM<span class="sc">*</span>btfl_ts[,<span class="fu">unique</span>(abund.true)], </span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>                                          btfl_week_missing<span class="sc">$</span>count, </span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>                                          ts_season_count[<span class="sc">!</span><span class="fu">is.na</span>(COUNT), COUNT] )) <span class="sc">+</span> </span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>, <span class="st">"missing"</span>, <span class="st">"GAM_fit"</span>),</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col, missing_col, GAM_col)) <span class="sc">+</span></span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- Fitting GAM model with rbms"</span>,</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>btfl_fig4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="do">## plot-fitted-flight-curve</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> ts_flight_curve<span class="sc">$</span>pheno</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>btfl_fig4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>ts_season_count[ANCHOR <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(COUNT), ], <span class="fu">aes</span>(<span class="at">x=</span>DAY_SINCE, <span class="at">y=</span>COUNT, <span class="at">colour =</span> <span class="st">"count"</span>)) <span class="sc">+</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>(<span class="at">data=</span>btfl_week_missing, <span class="fu">aes</span>(<span class="at">x=</span>doy, <span class="at">y=</span>count, <span class="at">colour =</span> <span class="st">"missing"</span>), </span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shape=</span><span class="dv">4</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">stroke=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> btfl_ts, <span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> act, <span class="at">colour =</span> <span class="st">"activity"</span>)) <span class="sc">+</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_line</span>(<span class="at">data =</span> pheno,</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">aes</span>(<span class="at">x =</span> trimDAYNO, <span class="at">y =</span> btfl_ts[, <span class="fu">unique</span>(abund.true)]<span class="sc">*</span>NM, <span class="at">colour =</span> <span class="st">"GAM_fit"</span>)) <span class="sc">+</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="dv">1</span>,<span class="dv">365</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fu">max</span>(btfl_ts<span class="sc">$</span>act, </span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>                                          pheno<span class="sc">$</span>NM<span class="sc">*</span>btfl_ts[,<span class="fu">unique</span>(abund.true)], </span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>                                          btfl_week_missing<span class="sc">$</span>count, </span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>                                          ts_season_count[<span class="sc">!</span><span class="fu">is.na</span>(COUNT), COUNT] )) <span class="sc">+</span> </span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_colour_manual</span>(<span class="st">""</span>, </span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"activity"</span>, <span class="st">"missing"</span>, <span class="st">"GAM_fit"</span>),</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values =</span> <span class="fu">c</span>(cnt_col, flc_col, missing_col, GAM_col)) <span class="sc">+</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Simulated butterfly counts ("</span>, y,<span class="st">")"</span>),</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subtitle =</span> <span class="st">"- Fitting GAM model with rbms"</span>,</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="st">"Day of Year"</span>,</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>btfl_fig4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
