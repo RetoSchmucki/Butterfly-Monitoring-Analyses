@@ -314,7 +314,7 @@ btfl_fig4
 To compare the fitted curve with the activity curve, we should use a standard AUC of 1 to enable a fair comparison between models fitted to different population sizes. Using the standardized activity curve and the GAM-generated flight curve (`NM`), we can calculate the Root Mean Squared Error (RMSE) to estimate the goodness of fit of the flight curve generated with the rbms package.
 
 $$
-   RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^n \left( y_i - \tilde{y}_i\right)}
+   RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^n \left( y_i - \tilde{y}_i\right)^2}
 $$
 
 where $y_i$ is the `NM` value at time $i$ and $\tilde{y}_i$ the value from the standardized activity curve at time $i$, from day $1$ to $n$ of the monitoring season.

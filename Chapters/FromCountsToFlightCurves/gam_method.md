@@ -1,24 +1,4 @@
-# Data Analyses and Methods {.unnumbered}
-
-Biodiversity monitoring is essential to assess and understand the status and trends of species and ecosystems. Through active monitoring, we can integrate new information and update the knowledge needed for decision-making. Analyzing monitoring data can range from simple data exploration to the development of complex statistical models. A thorough understanding of both the data and the methods is fundamental to the selection and application of appropriate methods. Such an understanding will also provide important insights into the results enhancing our comprehension and helping us to communicate the results effectively to decision-makers.
-
-## Data Generation Processes
-
-To develop robust monitoring methods and analyze the incoming data appropriately, it is important to understand the processes that generate the data and how the monitoring protocol affects the nature and structure of the data. For example, the life cycle of butterflies affects the number of adult individuals that can be observed in a given location at a given time. The seasonality of the emergence process creates a temporal pattern in the observed and recorded data that must be accounted for in the analysis. Systematic variation may also result from differences in sampling effort (e.g. the area sampled, the time spent recording or the experience of the recorders).
-
-Understanding the influence of both biological and sampling components on the data generation process is crucial for the design and development of methods that can filter out the component of interest while accounting for systematic structures in the data. This also helps in assessing whether the monitoring program accurately captures and reflects the population of interest or whether the sample is biased and unrepresentative. When designing a monitoring program, it is important to identify the population to be monitored and understand how the sampling protocol may affect the representativeness of the data and introduce potential bias.
-
-## Data Simulation
-
-To better understand the influence of species biology and sampling protocols on data generation, we will use data simulation approaches. Data simulation involves generating random data sets based on defined rules and known parameters. This technique is useful not only to illustrate the outcome of ecological and sampling processes but also to test methods and improve our understanding of statistical models and their potential failures.
-
-When carefully designed, data simulation is a powerful tool for testing and validating methods and performing sensitivity analyses to assess their robustness to violations of underlying assumptions. Simulated data sets allow for exploring systematic patterns in the data and evaluating the behavior of models to identify their strengths and limitations.
-
-In the following sections, we will use data simulations to illustrate and explore the different components of butterfly monitoring data generated under different scenarios. Through these simulations, we aim to 1) gain a deeper understanding of the data structure resulting from the ecological and sampling processes involved in butterfly monitoring schemes, 2) demonstrate and compare different modeling approaches and 3) understand the information that can be derived from these approaches.
-
-## Statistical Modelling
-
-### Generalized Additive Model approach
+## Generalized Additive Model approach
 ```{R}
 #| label: setup_gam
 #| results: hide
@@ -88,7 +68,7 @@ sample_missing <- function(data, propMissing = 0.25){
 }
 ```
 
-#### Simulated count
+## Simulated count
 
 
 ```{R}
@@ -276,7 +256,7 @@ btfl_fig4 <- ggplot() +
 btfl_fig4
 ```
 
-#### GAM basis for flight curve spline
+## GAM basis for flight curve spline
 
 ```{R}
 #| label: gam_basis
@@ -317,6 +297,3 @@ ggplot() +
     geom_line(data= pheno, aes(x = trimDAYNO, y = btfl_ts[, unique(abund.true)]*NM, colour = "Flight Curve")) +
     labs(y = expression(f(trimDAYNO)), x = "DAYNO") 
 ```
-
-## From Counts to Models
-

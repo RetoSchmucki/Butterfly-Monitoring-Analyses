@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.55">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -826,7 +826,7 @@ y_j = rpois(\lambda_j)
 </div>
 <p>To compare the fitted curve with the activity curve, we should use a standard AUC of 1 to enable a fair comparison between models fitted to different population sizes. Using the standardized activity curve and the GAM-generated flight curve (<code>NM</code>), we can calculate the Root Mean Squared Error (RMSE) to estimate the goodness of fit of the flight curve generated with the rbms package.</p>
 <p><span class="math display">\[
-   RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^n \left( y_i - \tilde{y}_i\right)}
+   RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^n \left( y_i - \tilde{y}_i\right)^2}
 \]</span></p>
 <p>where <span class="math inline">\(y_i\)</span> is the <code>NM</code> value at time <span class="math inline">\(i\)</span> and <span class="math inline">\(\tilde{y}_i\)</span> the value from the standardized activity curve at time <span class="math inline">\(i\)</span>, from day <span class="math inline">\(1\)</span> to <span class="math inline">\(n\)</span> of the monitoring season.</p>
 </section>
