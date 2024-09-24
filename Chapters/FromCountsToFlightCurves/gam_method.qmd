@@ -1,3 +1,4 @@
+# Statistical model and flight curve {.unnumbered}
 ## Generalized Additive Model approach
 
 ```{R}
