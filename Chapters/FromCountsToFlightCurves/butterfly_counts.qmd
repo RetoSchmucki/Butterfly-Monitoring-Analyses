@@ -421,4 +421,4 @@ btfl_fig5
 
 ## Simple trend case
 
-In the first scenario, we apply the method to a simple case where we have a univoltine species monitored over 15 years at 100 sites, where populations follow the same trend with a known growth rate.
+In our first scenario, we apply the method to a simple case study of a single univoltine species monitored over 15 years at 100 sites. In this case, the observed population trends follow a consistent trajectory with a known growth rate.
