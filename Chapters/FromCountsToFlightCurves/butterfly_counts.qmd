@@ -2,7 +2,7 @@
 
 ## Simulation of Butterfly Counts
 
-We will use simulated data to demonstrate and evaluate methods for calculating butterfly abundance indices, population trends and multi-species indicators such as the European Grassland Butterfly Indicator. To achieve this, we need to generate realistic data sets with known parameters. Data simulation will allow us to apply and test the methods on data generated under different scenarios. This approach will enable rigorous sensitivity analysis and provide crucial insights into the methods and a deeper understanding of their performance and limitations.
+We will use simulated data to demonstrate and evaluate methods for calculating butterfly abundance indices, population trends and multi-species indicators such as the European Grassland Butterfly Indicator. To do this, we need to generate realistic data sets with known parameters. Data simulation will allow us to apply and test the methods to data generated under different scenarios. This approach will allow rigorous sensitivity analysis and provide key insights into the methods and a deeper understanding of their performance and limitations.
 
 ```{R}
 #| label: load-packages
@@ -24,11 +24,11 @@ GAM_col <- '#483d8b'
 
 ### Simulation Tool for Butterflies and Other Phenologies
 
-Because butterflies' life cycle is strongly structured in time, with species-specific phenologies, we must account for this ecological process when simulating individual counts recorded across an entire season. The temporal pattern in the number of adult butterflies (imago) is determined by their emergence rate, the timing of the emergence and the life span of the adult. These parameters will often result in the number of adult individuals increasing over a certain period, up to a peak after when their number starts to decline. If a species can produce more than one generation per season, the number will display additional waves of emergence, each with its respective start, peak and decline periods. For each generation, the hump-shaped temporal pattern in the number of adults can often be described by a function that has a mean (center), variance (width) and a certain level of skewness (asymmetry). When merged, the individual patterns can become hidden under the pattern resulting from the cumulative effect of partly overlapping generations.
+As the life cycle of butterflies is highly structured in time, with species-specific phenologies, we need to take this ecological process into account when simulating individual counts over an entire season. The temporal pattern in the number of adult butterflies (imago) is determined by their emergence rate, the timing of emergence and the lifespan of the adult. These parameters often result in the number of adults increasing over a period of time to a peak, after which their numbers begin to decline as mortality exceeds emergence. If a species can produce more than one generation in a season, the number will show additional waves of emergence, each with its own start, peak and decline. For each generation, the hump-shaped temporal pattern in the number of adults can often be described by a function that has a mean (centre), variance (width) and some degree of skewness (asymmetry). When combined, the pattern resulting from the cumulative effect of partially overlapping generations can obscure the individual patterns.
 
-To simulate butterfly count data with such phenological patterns, we will use the function `timeseries_sim()` from the R package `butterflyGamSims` developed by Collin Edwards [see @edwardsEstimatingButterflyPopulation2023]. This package is freely available on [GitHub](https://github.com/cbedwards/butterflyGamSims/tree/main) and will allow us to generate realistic data sets under scenarios with various levels of complexity. 
+To simulate butterfly count data with such phenological patterns, we will use the function `timeseries_sim()` from the R package `butterflyGamSims` developed by Collin Edwards [see @edwardsEstimatingButterflyPopulation2023]. This package is freely available on [GitHub](https://github.com/cbedwards/butterflyGamSims/tree/main) and will allow us to generate realistic datasets under scenarios of varying complexity.
 
-We illustrate how the `timeseries_sim()` function works with a simple case where we simulate butterfly counts for a univoltine species with a Gaussian pattern (i.e. one generation with Normal distribution), where the peak abundance is observed at day 175  with a standard deviation of 15 days.
+We illustrate how the `timeseries_sim()` function works with a simple case where we simulate butterfly counts for a univoltine species with a Gaussian pattern (i.e. one generation with a normal distribution), where the peak abundance is observed on day 175 with a standard deviation of 15 days.
 
 ```{R}
 #| label: simulation_gaussian
@@ -53,28 +53,28 @@ btfl_data <- timeseries_sim(nsims=1,
                )
 ```
 
-The object produced by the `timeseries_sim()` function contains 1) a `data.frame` NAME\$timeseries with the time series and 2) a `data.frame` NAME\$parms with the parameters used for the simulation. In the parameters, you will find the population growth rate (`growth.rate`), the initial population size (`init. size`) measure in number of individuals expected over the season, the peak of the activity curve (`act.mean`) measured in days and the width of the activity curve (`act.sd`) that is measured in standard deviation. 
+The object returned by the `timeseries_sim()` function contains 1) a `data.frame` NAME\$timeseries with the time series and 2) a `data.frame` NAME\$parms with the parameters used for the simulation. The parameters are the population growth rate (`growth.rate`), the initial population size (`init.size`) measured in number of individuals expected over the season, the peak of the activity curve (`act.mean`) measured in days and the width of the activity curve (`act.sd`) measured in standard deviation.
 
 :::{.callout-note}
-Note that not all sampling parameters used for the simulation are included in the parms object; the `activity.type` (the distribution function used to define the activity curve), the `sample.type` (the sampling process used to sample random counts along the activity curve) and the `abund.type` (the type of the growth rate, deterministic or with a log-normal process error) are missing.
+Note that not all the sampling parameters used for the simulation are included in the parms object; `activity.type' (the distribution function used to define the activity curve), `sample.type' (the sampling procedure used to sample random counts along the activity curve) and `abund.type' (the type of growth rate, deterministic or with a log-normal process error) are missing.
 :::
 
 
 ## Simulate Data Sampling Process
 
-With the `timeseries_sim()` function above, we simulated a regular time series of butterfly counts where the actual number of active butterfly of each day are draw from a Poisson distribution with a given expectation defined by the activity curve along a day-of-year vector $j$ following the probability density of a normal distribution (Gaussian) with mean equal to the peak day $\mu$ (`act.mean`) and a standard deviation $\alpha$ (`act.sd`). Because the integral of the probability density distribution (area under the curve) sum to 1, we can multiply the density by the abundance to retrieve a vector of expected abundance for each day-of-year, $\lambda_j$.
+With the `timeseries_sim()` function above we simulated a regular time series of butterfly counts, where the actual number of active butterflies of each day is drawn from a Poisson distribution with a given expectation, defined by the activity curve along a day-of-year vector $j$, following the probability density of a normal (Gaussian) distribution with a mean equal to the peak day $\mu$ (`act.mean`) and a standard deviation $\alpha$ (`act.sd`). Since the integral of the probability density distribution (area under the curve) is 1, we can multiply the density by the total abundance to obtain a vector of expected abundance for each day of the year, $\lambda_j$.
 
 $$
 \lambda_j = abundance * \frac{1}{\alpha \sqrt{2 \pi}} \exp \left(- \frac{1}{2} \left( \frac{\left(j - \mu\right)}{\alpha}\right)^2\right)
 $$
 
-From the activity curve, we can use the `rpois()` function in R to draw a random value from a Poisson distribution, $y_i$ representing the count for day $j$, where the mean is specified by expected value $\lambda$ at day $j$.
+From the activity curve, we can use the `rpois()` function in R to draw a random value from a Poisson distribution, where $y_i$ is the count for day $j$ and the mean is given by the expected value $\lambda$ on day $j$.
 
 $$
 y_j = rpois(\lambda_j)
 $$
 
-From this simulation, we have generated the ecological process for the butterfly counts, for a given abundance distributed over a specific phenology defined by a Gaussian curve with a peak (mean) and a breath (standard deviation).
+From this simulation, we have generated the ecological process for the butterfly counts, for a given abundance distributed over a specific phenology, defined by a Gaussian curve with a peak (mean) and a breath (standard deviation).
 
 ```{R}
 #| label: show_timeseries_object
@@ -86,7 +86,7 @@ kable(btfl_data$timeseries[c(1:3,160:163,250:253),])
 ```
 <br>
 
-The additional structure resulting from the monitoring protocol (observation process) can now be added to the simulated time series and replicate a specific protocol. In this first case, we will simulate a protocol with weekly visits and include some missing counts for weeks when the minimal monitoring conditions were not met or the observer was absent. For this, we will write some new R functions. The first function will define the start and end of the monitoring season and sample one monitoring day per week over the season. Then we will write functions to simulate a certain level of missing weekly visits within the season. The likelihood of missing weeks tends to be higher at the beginning and the end of the season and lower in the middle. Let's start with the first function that defines the monitoring season and resamples one day of the simulated time series every week. We will name the function `sim2bms()` as it aligns the simulated time series to the protocol of a specific Butterfly Monitoring Scheme (BMS). The function needs the time series, and additional arguments to define the year that we want to extract `yearKeep`, if the time series must be resampled weekly `weeklySample`, which day should be used for the weekly resampling `weekdayKeep` (this can be a vector of days, e.g. c(2,3,4,5), or a specific day), and finally the monitoring season `monitoringSeason` which correspond to a vector of months, e.g c(4,5,6,7,8,9) represent a season starting in April and ending in September. Note that this function will also add some new variables such as the date, the ISO week number and the day of the week.  
+The additional structure resulting from the monitoring protocol (observation process) can now be added to the simulated time series to reproduce a specific protocol. In this first case, we will simulate a protocol with weekly visits and include some missing counts for weeks when the minimum monitoring conditions were not met or the observer was absent. To do this, we will write some new R functions. The first function will define the start and end of the monitoring season and sample one monitoring day per week throughout the season. Then we will write functions to simulate a certain level of missing weekly visits within the season. The probability of missing weeks tends to be higher at the beginning and end of the season and lower in the middle. Let's start with the first function, which defines the monitoring season and resamples one day of the simulated time series each week. We will call the function `sim2bms()` as it adapts the simulated time series to the protocol of a specific Butterfly Monitoring Scheme (BMS). The function takes the time series and additional arguments to define the year we want to extract `yearKeep`, if the time series needs to be resampled weekly `weeklySample`, which day to use for the weekly resampling `weekdayKeep` (this can be a vector of days, e.g. c(2,3,4,5), or a specific day), and finally the monitoring season `monitoringSeason`, which is a vector of months, e.g. c(4,5,6,7,8,9) represents a season starting in April and ending in September. Note that this function also adds some new variables such as the date, the ISO week number and the day of the week. 
 
 ```{R}
 #| label: simulation_2_BMS_function
@@ -120,7 +120,7 @@ sim2bms <- function(data, yearKeep = NULL, weeklySample = FALSE, weekdayKeep = N
 
 ```
 
-We can apply this function to retrieve a specific year of the simulated time series and add some new variables, leaving all other parameters empty. With the same function, we can also resample weekly counts (e.g. one day from c(2:5)) and restrict the time series to a specific monitoring season (e.g. c(4:9)). 
+We can use this function to retrieve a particular year of the simulated time series and add some new variables, leaving all other parameters empty. The same function can also be used to resample weekly counts (e.g. a day from c(2:5)) and to restrict the time series to a particular monitoring season (e.g. c(4:9)). 
 
 
 ```{R}
@@ -172,9 +172,9 @@ btfl_fig2 <- ggplot() +
 btfl_fig1
 btfl_fig2
 ```
-In the example above, the activity curve represented by the line has a Gaussian shape and counts presented by the points along the curve are independent random samples from a Poisson distribution. Because we sampled a count value for 365 days (day-of-year; doy), the counts are representative of the population of active adult butterflies as if the site was visited every. This implies that a proportion of butterflies are counted more than one day as their lifespan exceeds one day. On Pollard transect, this is how butterfly counts are likely to be counted and reported, but with a different frequency as visits are generally weekly, fortnightly, or even monthly. We can replicate this value by resampling the daily count weekly.
+In the example above, the activity curve represented by the line has a Gaussian shape and the counts represented by the points along the curve are independent samples from a Poisson distribution. Because we sampled a count value for 365 days (day-of-year; doy), the counts are representative of the population of active adult butterflies as if the site were visited every day. This means that a proportion of butterflies will be counted on more than one day because their lifespan is longer than one day. On Pollard transects, butterfly counts are likely to be counted and reported in this way, but at a different frequency, as visits may be weekly, fortnightly or even monthly. We can replicate this value by resampling the daily count on a weekly basis.
 
-From the weekly visits, counts outside of the monitoring period will not be informed, in many cases these are 'zeros' as we expect the monitoring season to align with butterflies' activity. Some other weeks might be missing from the time series, potentially due to unsuitable weather conditions for monitoring or the recorder's availability. We can inform and exclude the missing visits by resampling a subset of the weekly counts.
+Weekly visits will not include counts outside the monitoring period, in many cases these will be 'zeros' as we do not expect adult butterfly activity outside the monitoring season. Some other weeks may be missing from the time series, possibly due to unsuitable weather conditions for monitoring or recorder availability. We can inform and exclude the missing visits by resampling a subset of the weekly counts.
 
 ```{r}
 #| label: sample-season-missing
@@ -225,7 +225,7 @@ btfl_fig3
 
 ## Generalized Additive Models with rbms
 
-We will use the simulation to test the GAM method implemented in the [R package rbms](https://retoschmucki.github.io/rbms/index.html) [@schmuckirbms2022]. Because recorders only report the number of observed butterflies, zeros are generally not reported but can be derived from the visit dates.
+We will use the simulation to test the GAM method implemented in the [R package rbms](https://retoschmucki.github.io/rbms/index.html) [@schmuckirbms2022]. As recorders only report the number of butterflies observed, zeros are generally not reported, but can be inferred from the visit dates (e.g. we can infer zeros for the dates when monitoring took place but no individuals were reported).
 
 ### Organising BMS count data
 
@@ -281,7 +281,7 @@ ts_flight_curve <- rbms::flight_curve(ts_season_count,
                        TimeUnit = 'd')
 ```
 
-The flight curve computed by the `rbms::flight_curve()` function is stored in the ...\$pheno object where the days of year are stored under the variable `trimDAYNO` and the standardized flight curve under the variable `NM`. The `NM` variable is scaled to an Area Under the Curve (AUC) that sum to 1. To compare the flight curve derived from the GAM with the activity curve used for the simulation, we must rescale them to the same AUC, in other words, we must rescale the activity curve to have an AUC of 1 or rescale the `NM` to the population size used for the simulation. Here we will rescale the `NM` to match the simulation population size, this will allow us to display the curves and the counts on the same plot with the correct scale.
+The flight curve computed by the `rbms::flight_curve()` function is stored in the ...\$pheno object, where the days of the year are stored in the variable `trimDAYNO` and the standardised flight curve in the variable `NM`. The `NM` variable is scaled to an area under the curve (AUC) that sums to 1. To compare the flight curve derived from the GAM with the activity curve used for the simulation, we must rescale them to the same AUC, in other words we must rescale the activity curve to have an AUC of 1 or rescale the `NM` to the population size used for the simulation. Here we will rescale the `NM` to match the population size of the simulation, this will allow us to display the curves and counts on the same graph with the correct scale.
 
 ```{R}
 #| label: plot-fitted-flight-curve
@@ -311,7 +311,7 @@ btfl_fig4 <- ggplot() +
 btfl_fig4
 ```
 
-To compare the fitted curve with the activity curve, we should use a standard AUC of 1 to enable a fair comparison between models fitted to different population sizes. Using the standardized activity curve and the GAM-generated flight curve (`NM`), we can calculate the Root Mean Squared Error (RMSE) to estimate the goodness of fit of the flight curve generated with the rbms package.
+To compare the fitted curve with the activity curve, we should use a standard AUC of 1 to allow a fair comparison between models fitted to different population sizes. Using the standardised activity curve and the GAM generated flight curve (`NM`), we can calculate the Root Mean Squared Error (RMSE) to estimate the goodness of fit of the flight curve generated by the rbms package.
 
 $$
    RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^n \left( y_i - \tilde{y}_i\right)^2}
@@ -321,7 +321,7 @@ where $y_i$ is the `NM` value at time $i$ and $\tilde{y}_i$ the value from the s
 
 ## Non Gaussian flight curve
 
-The same procedure can be applied to flight curves having more complex shapes. Here we will generate a time series of butterfly counts drawn from a known flight curve (adult activity), using simulation from a Zonneveld model.
+The same procedure can be applied to flight curves with more complex shapes. Here we generate a time series of butterfly counts from a known flight curve (adult activity) using a simulation of a Zonneveld model.
 
 ```{R}
 #| label: zonneveld-simulation
@@ -421,4 +421,4 @@ btfl_fig5
 
 ## Simple trend case
 
-In the first scenario, we will apply the method to a simple case where we have one univoltine species that is monitored over 15 years across 100 sites where the populations follow the same trend with a known growth rate.
+In the first scenario, we apply the method to a simple case where we have a univoltine species monitored over 15 years at 100 sites, where populations follow the same trend with a known growth rate.
